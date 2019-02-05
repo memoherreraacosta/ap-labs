@@ -21,15 +21,18 @@ in the "str-main.c" code.
 
 Call all functions from strlib.c library in a new str-main.c file
 Use the following commands for compilation and linking
-'''
+
+```
   gcc -c str-main.c -o str-main.o
   gcc -c strlib.c -o strlib.o
   gcc str-main.o strlib.o -o str-final.o
-'''
+```
+
 Your program needs to support the following arguments. Check the expected output:
-'''
+
+```
  ./str-final.o originalVeryLongString Addition Add
  Initial Lenght      : 22
  New String          : originalVeryLongStringAddition
  SubString was found : yes
-'''
+```

@@ -22,3 +22,5 @@ func WordCount(s string) map[string]int {
 func main() {
 	wc.Test(WordCount)
 }
+
+//To see the implementation in a Go Lang enviorment, check this link: https://play.golang.org/p/L4cUFXOQmRT

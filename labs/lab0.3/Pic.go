@@ -17,3 +17,5 @@ func Pic(dx, dy int) [][]uint8 {
 func main() {
 	pic.Show(Pic)
 }
+
+//To see the implementation of the following code in a Go Lang, check the following link: https://play.golang.org/p/ShL4r7pMdBm

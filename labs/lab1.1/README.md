@@ -15,5 +15,5 @@ To run mycat.c file you need to compile it with the following commands in termin
   ./mycat.o 'the name of the file you want to open'  
 ```
 
-The efficiency of the program is shown in the 'Measure C code.ipynb' file inside the 'lab1.1' directory.
+The efficiency of the program is shown in the *Measure C code.ipynb* file inside the *lab1.1* directory.
 Here´s a link to the file : https://github.com/memoherreraacosta/ap-labs/blob/master/labs/lab1.1/Measure%20C%20code.ipynb

@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"io/ioutil"
+	"os"
 )
 
 // scanDir stands for the directory scanning implementation
 func scanDir(dirPath string) error {
 
-	files , err := ioutil.ReadDir(dirPath)
+	files, err := ioutil.ReadDir(dirPath)
 	total := len(files)
 	dir := 0
 	sLin := 0
@@ -24,13 +24,13 @@ func scanDir(dirPath string) error {
 			otros++
 		}
 	}
-	
+
 	fmt.Printf("+----------------+------+")
 	fmt.Printf("| Path:          |  %s  |", dirPath)
 	fmt.Printf("+----------------+------+")
 	fmt.Printf("| Directories    |  %d  |\n", dir)
-	fmt.Printf("| Symbolic Links |  %d  |\n", sLink)
-	fmt.Printf("| Other files    |  %d  |\n", other)
+	fmt.Printf("| Symbolic Links |  %d  |\n", sLin)
+	fmt.Printf("| Other files    |  %d  |\n", otros)
 	fmt.Printf("+----------------+------+")
 
 	return nil

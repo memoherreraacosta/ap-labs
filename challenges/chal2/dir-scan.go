@@ -28,7 +28,7 @@ func scanDir(dirPath string) error {
 	fmt.Printf("+----------------+------+")
 	fmt.Printf("| Path:          |  %s  |", dirPath)
 	fmt.Printf("+----------------+------+")
-	fmt.Printf("| Directories    |  %d  |\n", dir))
+	fmt.Printf("| Directories    |  %d  |\n", dir)
 	fmt.Printf("| Symbolic Links |  %d  |\n", sLink)
 	fmt.Printf("| Other files    |  %d  |\n", other)
 	fmt.Printf("+----------------+------+")

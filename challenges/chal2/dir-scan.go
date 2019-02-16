@@ -10,7 +10,7 @@ import (
 func scanDir(dirPath string) error {
 
 	files , err := ioutil.ReadDir(dirPath)
-	total := len(dirFiles)
+	total := len(files)
 	dir := 0
 	sLin := 0
 	otros := 0

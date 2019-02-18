@@ -89,7 +89,7 @@ void analizeLog(char *logFile, char *report){
                 //Asignar a arreglo bidimensional
 
                 strcpy(numFondo, num);
-                strcat(numFondo,strcat(fondo,"\n"));
+                strcat(numFondo,strcat(fondo,"\n\0"));
 
                 if(flag == 1){
                         //Default
@@ -102,7 +102,7 @@ void analizeLog(char *logFile, char *report){
 
 
                         if(strcmp(textoF[i][0], ".") == 0){
-                                textoF[i][0] = strcat(title,"\n");
+                                textoF[i][0] = strcat(title,"\n\0");
                                 textoF[i][1] = numFondo;
 
                                 printf("Titulo : %s",title);

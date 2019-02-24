@@ -9,13 +9,12 @@ import (
 // scanDir stands for the directory scanning implementation
 func scanDir(dirPath string) error {
 
-	files, err := ioutil.ReadDir(dirPath)
-	total := len(files)
+	files, _ := ioutil.ReadDir(dirPath)
 	dir := 0
 	sLin := 0
 	otros := 0
 
-	for err, fil := range files {
+	for _, fil := range files {
 		if fil.Mode()&os.ModeDir != 0 {
 			dir++
 		} else if fil.Mode()&os.ModeSymlink != 0 {
@@ -25,13 +24,13 @@ func scanDir(dirPath string) error {
 		}
 	}
 
-	fmt.Printf("+----------------+------+")
-	fmt.Printf("| Path:          |  %s  |", dirPath)
-	fmt.Printf("+----------------+------+")
+	fmt.Printf("\n+----------------+------+\n")
+	fmt.Printf("| Path:          |  %s  |\n", dirPath)
+	fmt.Printf("+----------------+------+\n")
 	fmt.Printf("| Directories    |  %d  |\n", dir)
 	fmt.Printf("| Symbolic Links |  %d  |\n", sLin)
 	fmt.Printf("| Other files    |  %d  |\n", otros)
-	fmt.Printf("+----------------+------+")
+	fmt.Printf("+----------------+------+\n")
 
 	return nil
 }

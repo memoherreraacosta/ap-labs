@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
+
 #define REPORT_LIST "list.txt"
 #define REPORT_FILE "newFile.txt"
 
 int createReport(char *fRead, char *fList); 
 int omitir(char* test);
 int omitChar(char c);
+void guardarPalabra(char* palabra, int line); 
 
 int main(int argc, char **argv) {
 
@@ -36,11 +39,20 @@ int createReport(char *fRead, char *fWrite) {
 	int lineC = 1;
 	char cLow;
 	char palabra[45];
+	char palabraTest[45];
+	int sizeF = pos/2;
+	char *pValidas[sizeF][sizeF];
+
+	for(int i = 0 ; i < sizeF ;i++ ){
+		for(int j = 0; j < sizeF ; j++){
+			pValidas[i][j] = "-";
+		}
+	}
 
 	while (pos--){
         	ch = fgetc(fp1);  // copying file character by character
 
-		if(omitChar(ch) == -1){
+		if(omitChar(ch) == 0){
 			//Char that wont be a word
 			fputc(ch,fp2);
 
@@ -51,16 +63,39 @@ int createReport(char *fRead, char *fWrite) {
 
 		}else if(ch != '\n'){
 			//Is a word
-		
-			for(int i = 0 ; ch != '\n' &&  omitChar(ch) != -1; i++){
+					
+			for(int i = 0 ; ch != '\n' && omitChar(ch)==-1 ; i++){
 				palabra[i] = ch;
-				ch = fget(fp1);
 				cLow = tolower(ch);
+				palabraTest[i] = cLow;
+
+				ch = fgetc(fp1);	
 				pos--;
-			}
-
+		}
 			//Test palabra to put it into the file
+			//Crear referencia char* de palabra en minusculas para poder testearla con palabras invalidas
+			strcat(palabra,"\0");
 
+			if(omitir(palabra) == -1){
+				//Palabra valida
+				//Guardar palabra
+				int flag = 0;
+				for(int i = 0; (strcmp(palabraV[i][j],"-") != 0)  && flag == 0;i++){
+					for(int j = 0; (strcmp(palabraV[i][j],"-") != 0) && flag == 0 ;j++){
+						
+					}
+				}	
+			}
+				//Palabra invalida
+			
+			memset(palabra,'\0',sizeof(palabra));
+			memset(palabraTest,'\0',sizeof(palabraTest));
+			
+			//Guardar ultimo caracter leido
+			fputc(ch,fp2);
+			if(ch == '\n')
+				lineC ++;
+		
 		}else{
 			printf("wtf : %c\n",cLow);
 		}
@@ -71,27 +106,27 @@ int createReport(char *fRead, char *fWrite) {
 }
 int omitChar(char c){
 	switch(c){
-	case '.':	return -1;
-	case ' ':	return -1;
-	case ',':	return -1;
-	case ';':	return -1;
-	case ':':	return -1;
-	case '?':	return -1;
-	case '-':	return -1;
-	case '_':	return -1;
-	case '=':	return -1;
-	case '(':	return -1;
-	case ')':	return -1;
-	case '"':	return -1;
-	case '!':	return -1;
-	case '%':	return -1;
-	case '+':	return -1;
-	case '[':	return -1;
-	case ']':	return -1;
-	case '{':	return -1;
-	case '}':	return -1;
+	case '.':	return 0;
+	case ' ':	return 0;
+	case ',':	return 0;
+	case ';':	return 0;
+	case ':':	return 0;
+	case '?':	return 0;
+	case '-':	return 0;
+	case '_':	return 0;
+	case '=':	return 0;
+	case '(':	return 0;
+	case ')':	return 0;
+	case '"':	return 0;
+	case '!':	return 0;
+	case '%':	return 0;
+	case '+':	return 0;
+	case '[':	return 0;
+	case ']':	return 0;
+	case '{':	return 0;
+	case '}':	return 0;
 	
-	default:	return 0;
+	default:	return -1;
 	}
 }
 
@@ -110,10 +145,12 @@ int omitir(char* test){
 	   strcmp("in",test) == 0 ||
 	   strcmp("that",test) == 0)
 	{	
-		return -1;
+		return 0;
 	}
 	else
 	{
-		return 0;
+		return -1;
 	}
 }
+
+

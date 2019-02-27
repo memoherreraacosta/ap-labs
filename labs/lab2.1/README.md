@@ -3,7 +3,7 @@ Lab 2.1 - ClockWall
 
 ## Instructions
 
-[clock2.go](./clock2.go) will accept a port number and write a program 'clockWall.go' that acts as a client of several clock servers at once, reading the times from each one and displaying the results in a table, akin to the wall of clocks seen in some business offices.
+[clock2.go](./clock2.go) will accept a port number and write a program [clockWall.go](./clockWall.go) that acts as a client of several clock servers at once, reading the times from each one and displaying the results in a table, akin to the wall of clocks seen in some business offices.
 
 ```
 # Clock Servers initialization

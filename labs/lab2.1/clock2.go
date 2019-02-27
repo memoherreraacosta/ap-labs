@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"os"
 	"time"
 )
 
@@ -20,7 +21,19 @@ func handleConn(c net.Conn) {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:9090")
+
+	if len(os.Args) != 3 {
+		log.Printf("Error in number of arguments\n ")
+		return
+	}
+	if os.Args[1] != "-port" {
+		log.Printf("Error in arguments\n")
+		return
+	}
+
+	lh := "localhost:" + os.Args[2]
+
+	listener, err := net.Listen("tcp", lh)
 	if err != nil {
 		log.Fatal(err)
 	}

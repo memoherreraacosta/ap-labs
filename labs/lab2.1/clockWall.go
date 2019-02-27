@@ -27,8 +27,7 @@ func main() {
 
 		go copyFun(con, os.Stdout)
 	}
-	for true {
-	}
+	for true {}
 }
 
 func copyFun(src io.Reader, des io.Writer) {

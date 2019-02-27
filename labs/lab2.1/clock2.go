@@ -11,8 +11,11 @@ import (
 
 func handleConn(c net.Conn) {
 	defer c.Close()
+	tzone := os.Getenv("TZ");
+	zone , _ := time.LoadLocation(os.Getenv("TZ"));
+	
 	for {
-		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
+		_, err := io.WriteString(c, tzone +" : " +time.Now().In(zone).Format("15:04:05\n"))
 		if err != nil {
 			return // e.g., client disconnected
 		}
@@ -31,7 +34,7 @@ func main() {
 		return
 	}
 
-	lh := "localhost:" + os.Args[2] + "\n"
+	lh := "localhost:" + os.Args[2]
 
 	listener, err := net.Listen("tcp", lh)
 	if err != nil {

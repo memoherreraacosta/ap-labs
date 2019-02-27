@@ -31,7 +31,7 @@ func main() {
 		return
 	}
 
-	lh := "localhost:" + os.Args[2]
+	lh := "localhost:" + os.Args[2] + "\n"
 
 	listener, err := net.Listen("tcp", lh)
 	if err != nil {

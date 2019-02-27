@@ -12,7 +12,7 @@ import (
 func main() {
 	//There are 3 args
 
-	for i := 1; i < 3; i++ {
+	for i := 1; i < len(os.Args); i++ {
 
 		split := strings.Split(os.Args[i], "=")
 

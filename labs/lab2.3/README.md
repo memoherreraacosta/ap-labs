@@ -27,7 +27,7 @@ General Requirements and Considerations
 How to run it?
 ----------
 - Clone or download this current repository
-- Move inside the directory in your terminal and run the following command to compile the .go files and to initialize the time zones 
+- Move inside the directory in your terminal and run the following command to compile the C files 
 ```
 $ make
 ```

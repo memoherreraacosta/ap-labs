@@ -1,23 +1,52 @@
 Lab 2.3 - Cross-referencer
 ==========================
 
-Write a cross-referencer in C that prints a list of all words in a document, and, for each word, a list of the line numbers on which it occurs. Remove noise words like `the`, `and`, and so on.
+### Code in C that prints a list of all words in a document, and, for each word, a list of the line numbers on which it occurs. 
 
-```
-./cross-ref document.txt
-```
+### Remove noise words like :
+
+- the
+- and
+- a
+- an 
+- for
+- from 
+- in
+- to
+- of 
+- at
+- also
+- that
+
 
 General Requirements and Considerations
 ---------------------------------------
-- Use the `cross-ref.c` file for your implementation.
-- Update `README.md` with the proper steps for building and running your code.
-- Follow the command-line arguments convention.
-- Don't forget to handle errors properly.
-- Coding best practices implementation will be also considered.
+- Have [GCC](https://gcc.gnu.org/install/) installed.
+- Have a text file to test (or use those text files in the repository)
 
-Test cases
+How to run it?
 ----------
-Your program will be tested with the following txt-based books.
+- Clone or download this current repository
+- Move inside the directory in your terminal and run the following command to compile the .go files and to initialize the time zones 
+```
+$ make
+```
 
-- [irving-little-573.txt](./irving-little-573.txt)
-- [irving-london-598.txt](./irving-london-598.txt)
+- To run it run the following command 
+```
+$ ./cross-ref [your document to be read]
+```
+
+- If you want to use the repositorie´stest cases, run the following command
+
+```
+$ ./cross-ref irving-little-573.txt
+```
+for [irving-little-573.txt](./irving-little-573.txt) 
+"or"
+```
+$ -/cross-ref irving-london-598.txt
+```
+for [irving-london-598.txt](./irving-london-598.txt)
+
+

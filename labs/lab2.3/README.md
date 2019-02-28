@@ -1,9 +1,9 @@
 Lab 2.3 - Cross-referencer
 ==========================
 
-#### Code in C that prints a list of all words in a document, and, for each word, a list of the line numbers on which it occurs. 
+#### - Code in C that prints a list of all words in a document, and, for each word, a list of the line numbers on which it occurs. 
 
-#### Remove noise words like :
+#### - Remove noise words like :
 
 * the
 * and
@@ -45,11 +45,11 @@ $ ./cross-ref [your document to be read]
 ```
 $ ./cross-ref irving-little-573.txt
 ```
-				for [irving-little-573.txt](./irving-little-573.txt) 
+for [irving-little-573.txt](./irving-little-573.txt) file
 	
 ```
 $ -/cross-ref irving-london-598.txt
 ```
-				for [irving-london-598.txt](./irving-london-598.txt)
+for [irving-london-598.txt](./irving-london-598.txt) file
 
 

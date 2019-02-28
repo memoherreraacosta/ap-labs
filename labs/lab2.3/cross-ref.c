@@ -116,7 +116,7 @@ int createReport(char *fRead, char *fWrite) {
 	printf("\nList of the words and where they were found :\n");
 	
 	for( int i = 0; strcmp(pValidas[i][0],"-") != 0 ; i++ ){
-		printf("%s\n",pValidas[i][0]);
+		printf("\n");
 		for( int j = 0 ; strcmp(pValidas[i][j],"-") != 0 ; j++ ){
 			printf("%s, ",pValidas[i][j]);
 		}

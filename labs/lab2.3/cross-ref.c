@@ -9,7 +9,6 @@
 int createReport(char *fRead, char *fList); 
 int omitir(char* test);
 int omitChar(char c);
-void guardarPalabra(char* palabra, int line); 
 char* toArray(int number);
 
 int main(int argc, char **argv) {
@@ -23,7 +22,7 @@ int main(int argc, char **argv) {
 }
 
 int createReport(char *fRead, char *fWrite) {
-	FILE *fp1, *fp2;
+	FILE *fp1;
 	char ch;
 	int pos;
  
@@ -32,16 +31,11 @@ int createReport(char *fRead, char *fWrite) {
         	return -1;
     	}
 
-    	if ((fp2 = fopen(fWrite, "w")) == NULL){
-	 	printf("File cannot be open FP2\n");        
-		return -2;
-	}
-
 	int lineC = 1;
 	char cLow;
 	char palabra[45];
 	char palabraTest[45];
-	int sizeW = 80;
+	int sizeW = 200;
 	int sizeL = 100;
 	char *pValidas[sizeW][sizeL];
 
@@ -55,11 +49,11 @@ int createReport(char *fRead, char *fWrite) {
         	// copying file character by character
 		if(omitChar(ch) == 0){
 			//Char that wont be a word
-			fputc(ch,fp2);
+			putchar(ch);
 
 		}else if(ch == '\n'){
 			//New line 
-			fputc(ch,fp2);
+			putchar(ch);
 			lineC ++;
 
 		}else if(ch != '\n'){
@@ -80,7 +74,7 @@ int createReport(char *fRead, char *fWrite) {
 			if(omitir(palabraTest) == -1){
 				//Palabra valida
 				//Guardar palabra
-				fputs(palabra,fp2);
+				printf("%s",palabra);
 
 				int flag = 0;
 				for(int i = 0; flag == 0 && i < sizeW; i++ ){
@@ -101,40 +95,32 @@ int createReport(char *fRead, char *fWrite) {
 
 				}	
 			}
-				//Palabra invalida
+			//Palabra invalida
 			
 			memset(palabra,'\0',sizeof(palabra));
 			memset(palabraTest,'\0',sizeof(palabraTest));
 			
 			//Guardar ultimo caracter leido
 			if(ch != EOF){
-				fputc(ch,fp2);
+				putchar(ch);
 				if(ch == '\n')
 					lineC ++;
 			}
+		
 		}else{
 			printf("wtf : %c\n",cLow);
 		}
     	}
-    	fclose(fp1);
-    	fclose(fp2);	
+    	fclose(fp1);	
 
-	printf("Works\n");
-	
-	FILE *fp3;
-
-	if ((fp3 = fopen(REPORT_LIST,"w")) == NULL){    
-		printf("\nFile cannot be opened FP3\n");
-        	return -1;
-    	}
+	printf("\nList of the words and where they were found :\n");
 	
 	for( int i = 0; strcmp(pValidas[i][0],"-") != 0 ; i++ ){
+		printf("\n");
 		for( int j = 0 ; strcmp(pValidas[i][j],"-") != 0 ; j++ ){
-			fputs(pValidas[i][j],fp3);
+			printf("%s, ",pValidas[i][j]);
 		}
 	}
-
-	fclose(fp3);
 	return 0;
 }
 int omitChar(char c){
@@ -171,5 +157,5 @@ int omitir(char* test){
 char* toArray(int number){
      	char* char_arr;
 	sprintf(char_arr, "%d", number); 
-        return char_arr;
+	return char_arr;
 }

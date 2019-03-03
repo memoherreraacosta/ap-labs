@@ -27,21 +27,26 @@ int textcolor(int attr, int fg, int bg){
 	return 0;
 }
 
-int printLogger(const char *format, const char *message ){
+int defaultf(const char *message){
+	printf("The following has no readible format : %s\n",message);
+	return 0;
+}
+
+int pLogger(const char *format, const char *message ){
 	
-	if(strcmp(format,"INFO")==0)
+	if(strcmp(format,"INFO")==0){
 		return infof(message);
-	
-	if(strcmp(format,"WARN")==0)
+	}
+	if(strcmp(format,"WARN")==0){
 		return warnf(message);
-
-	if(strcmp(format,"ERROR")==0)
+	}
+	if(strcmp(format,"ERROR")==0){
 		return errorf(message);
-
-	if(strcmp(format,"PANIC")==0)
+	}
+	if(strcmp(format,"PANIC")==0){
 		return panicf(message);
-
-	return -1;
+	}
+	return defaultf(message);
 }	
 
 int infof(const char *message){
@@ -74,7 +79,7 @@ int errorf(const char *message){
 int panicf(const char *message){
 // PANIC Panics. Non recoverable issues with core dump.
 // BLUE
-	textcolor(BRIGHT, YELLOW, BLACK);
+	textcolor(BRIGHT, BLUE, BLACK);
 	printf("%s\n",message);
 	textcolor(RESET, WHITE, BLACK);
 	return 0;

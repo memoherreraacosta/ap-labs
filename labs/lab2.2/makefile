@@ -1,7 +1,7 @@
 all: 
-	gcc testLogger.c -o testLogger.o
-	gcc logger.c -o logger.o
-	gcc testLogger.o logger.o -o loggerFinal.o
+	gcc -Wall testLogger.c logger.c -o loggerFinal.o
 	./loggerFinal.o
-remove:
-	($rm) logger.o testLogger.o loggerFinal.o
+clean:
+	($rm) logger.o 
+	($rm) testLogger.o 
+	($rm) loggerFinal.o

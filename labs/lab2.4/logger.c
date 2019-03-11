@@ -16,30 +16,27 @@ int infof(const char *message);
 int warnf(const char *message);
 int errorf(const char *message);
 int panicf(const char *message);
-int initLogger(char *logType);
+int initLogger(const char logType[]);
 int printLogger(const char *format, const char *message);
 
-char *lType = "default";
+char lType[] = "default";
 
 
-int initLogger(char *logType){
-	switch (0){
-		case (strcmp("syslog",logType)):
-			strcpy(lType,logType);
-			return 0;
-			break;
-		case (strcmp("stdout",logType)):
-			strcpy(lType,logType);
-			return 0;
-			break;
-		case (strcmp("",logType)):
-			strcpy(lType,logType);
-			return 0;
-			break;
-		default : 
-			return -1;
-			break;
-	}	
+int initLogger(const char logType[]){
+
+	if (strcmp("syslog",logType) == 0 ){
+		strcpy(lType,logType);
+		return 0;
+	}
+	if (strcmp("stdout",logType) == 0){
+		strcpy(lType,logType);
+		return 0;
+	}
+	if (strcmp("",logType) == 0){
+		strcpy(lType,logType);
+		return 0;
+	}
+	return -1;
 }
 
 int textcolor(int attr, int fg, int bg){	

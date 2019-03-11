@@ -7,12 +7,12 @@
 #define PANIC "PANIC"
 
 int pLogger(const char *format, const char *message);
-int initLogger(const char* logType);
+int initLogger(const char logType[]);
 
 int main(int argc, char **argv){
 	
 	//Default 
-	
+	printf("\nDEFAULT examples:\n");	
 	pLogger(INFO,"This is an INFO message");
 	// INFO message
 	pLogger(WARN,"This is a WARN message");
@@ -25,7 +25,7 @@ int main(int argc, char **argv){
 	
 	//stdout 
 	initLogger("stdout");
-
+	printf("\nSTDOUT examples:\n");
 	pLogger(INFO,"This is an INFO message");
 	// INFO message
 	pLogger(WARN,"This is a WARN message");
@@ -38,7 +38,7 @@ int main(int argc, char **argv){
 
 	//syslog
 	initLogger("syslog");
-
+	printf("\nSYSLOG examples:\n");
 	pLogger(INFO,"This is an INFO message");
 	// INFO message
 	pLogger(WARN,"This is a WARN message");

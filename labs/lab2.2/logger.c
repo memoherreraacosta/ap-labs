@@ -84,5 +84,3 @@ int panicf(const char *message){
 	textcolor(RESET, WHITE, BLACK);
 	return 0;
 }
-
-

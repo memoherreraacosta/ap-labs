@@ -1,24 +1,52 @@
 #include <stdio.h>
-#include "logger.h"
+#include <string.h>
 
-int main(){
+#define INFO "INFO"
+#define WARN "WARN"
+#define ERROR "ERROR"
+#define PANIC "PANIC"
 
-    // default logging
-    infof("INFO Message %d", 1);
-    warnf("WARN Message %d", 2);
-    errorf("ERROR Message %d", 2);
+int pLogger(const char *format, const char *message);
+int initLogger(const char* logType);
 
-    // stdout logging
-    initLogger("stdout");
-    infof("INFO Message %d", 1);
-    warnf("WARN Message %d", 2);
-    errorf("ERROR Message %d", 2);
+int main(int argc, char **argv){
+	
+	//Default 
+	
+	pLogger(INFO,"This is an INFO message");
+	// INFO message
+	pLogger(WARN,"This is a WARN message");
+	// WARN message
+	pLogger(ERROR,"This is an ERROR message");
+	// ERROR message
+	pLogger(PANIC,"This is a PANIC");
+	// PANIC message
 
-    // syslog logging
-    initLogger("syslog");
-    infof("INFO Message %d", 1);
-    warnf("WARN Message %d", 2);
-    errorf("ERROR Message %d", 2);
+	
+	//stdout 
+	initLogger("stdout");
 
-    return 0;
+	pLogger(INFO,"This is an INFO message");
+	// INFO message
+	pLogger(WARN,"This is a WARN message");
+	// WARN message
+	pLogger(ERROR,"This is an ERROR message");
+	// ERROR message
+	pLogger(PANIC,"This is a PANIC");
+	// PANIC message
+	
+
+	//syslog
+	initLogger("syslog");
+
+	pLogger(INFO,"This is an INFO message");
+	// INFO message
+	pLogger(WARN,"This is a WARN message");
+	// WARN message
+	pLogger(ERROR,"This is an ERROR message");
+	// ERROR message
+	pLogger(PANIC,"This is a PANIC");
+	// PANIC message
+
+	return 0;
 }

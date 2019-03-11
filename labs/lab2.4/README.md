@@ -28,12 +28,16 @@ General Requirements and Considerations
 Implementation
 ---------------------------
 
-This implementation prints 12 outputs, 3 blocks of 4 outputs; each block prints a type that the logger library has ( `INFO` , `WARN` , `ERROR` , `PANIC` ). Each block also has an implementation of the *initLogger* function, one as *DEFAULT*, the other as *STDOUT* and *SYSLOG*. Those are printed with a different font to identify them.
+This implementation prints 12 outputs, 3 blocks of 4 outputs; each block prints a type that the logger library has ( `INFO` , `WARN` , `ERROR` , `PANIC` ). 
+Each block also has an implementation of the *initLogger* function;
+
+-  one as *DEFAULT*, the other as *STDOUT* and *SYSLOG*. 
+
+Those are printed with a different font to identify them.
 
 To run the 'Logger Library' you need to compile the [testLogger.c](./testLogger.c) file with the [logger.c](./logger.c) static library. Then, run the executable object file. 
 
 That is made with the make command
-
 ```
 $ make
 ```

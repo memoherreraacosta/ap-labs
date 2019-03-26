@@ -1,137 +1,182 @@
-#include <stdio.h>
-#include <string.h>
+#include "logger.h"
 
 #define RESET		0
 #define BRIGHT 		1
+#define DIM		2
+#define UNDERLINE 	3
+#define BLINK		4
+#define REVERSE		7
+#define HIDDEN		8
 
 #define BLACK 		0
 #define RED		1
 #define GREEN		2
 #define YELLOW		3
 #define BLUE		4
+#define MAGENTA		5
+#define CYAN		6
 #define	WHITE		7
 
-int textcolor(int attr, int fg, int bg);
-int infof(const char *message);
-int warnf(const char *message);
-int errorf(const char *message);
-int panicf(const char *message);
-int initLogger(const char logType[]);
-int printLogger(const char *format, const char *message);
+int logDest = 0;  //0 for STDOUT, 1 for SYSLOG
 
-char lType[] = "default";
+// Functions used in the code
+// Implementation written by https://github.com/razonixx
 
+void textcolor(int attr, int fg, int bg);
+int infof(const char *format, ...);
+int warnf(const char *format, ...);
+int errorf(const char *format, ...);
+int panicf(const char *format, ...);
+void printBacktrace();
+void printBacktraceSyslog();
+int initLogger(char *logType);
 
-int initLogger(const char logType[]){
-
-	if (strcmp("syslog",logType) == 0 ){
-		strcpy(lType,logType);
+int initLogger(char *logType)
+{
+	if((strlen(logType) == 0) || (strcmp(logType, "stdout")) == 0)
+	{
+		//Log to stdout
+		logDest = 0;
 		return 0;
 	}
-	if (strcmp("stdout",logType) == 0){
-		strcpy(lType,logType);
+	else if(strcmp(logType, "syslog") == 0)
+	{
+		//Log to syslog
+		logDest = 1;
 		return 0;
 	}
-	if (strcmp("",logType) == 0){
-		strcpy(lType,logType);
-		return 0;
-	}
-	return -1;
+	panicf("Failed to initialize logger\n");
 }
 
-int textcolor(int attr, int fg, int bg){	
-	char command[13];
+void textcolor(int attr, int fg, int bg)
+{	char command[13];
 
 	/* Command is the control command to the terminal */
 	sprintf(command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40);
 	printf("%s", command);
-	return 0;
-}
-
-int defaultf(const char *message){
-	printf("The following has no readible format : %s\n",message);
-	return 0;
-}
-
-int pLogger(const char *format, const char *message ){
-	
-	if(strcmp(format,"INFO")==0){
-		return infof(message);
-	}
-	if(strcmp(format,"WARN")==0){
-		return warnf(message);
-	}
-	if(strcmp(format,"ERROR")==0){
-		return errorf(message);
-	}
-	if(strcmp(format,"PANIC")==0){
-		return panicf(message);
-	}
-	return defaultf(message);
 }	
 
-int infof(const char *message){
-// Info General information.
-// Green
-	textcolor(BRIGHT, GREEN, BLACK);
-	
-	if(strcmp(lType,"stdout") == 0){
-		printf("stdout log : [%s]\n",message);
-	}else if(strcmp(lType,"syslog") == 0){
-		printf("syslog log : [%s]\n",message);
-	}else{
-		printf("%s\n",message);
-	}
-	textcolor(RESET, WHITE, BLACK);
-	return 0;
+void printBacktrace(){
+
+	void *tracePtrs[10];
+	size_t count;
+	count = backtrace(tracePtrs, 10);
+	char** funcNames = backtrace_symbols(tracePtrs, count);
+	printf("\nBEGIN CORE DUMP\n");
+	printf("-----------------------------------------------------\n");
+	for (int i = 0; i < count; i++)
+		printf("%s\n", funcNames[i]);
+	printf("-----------------------------------------------------\n");
+	printf("END CORE DUMP\n");	
+	free(funcNames);
 }
 
-int warnf(const char *message){
-// WARN Warnings.
-// RED
-	textcolor(BRIGHT, RED, BLACK);
+void printBacktraceSyslog(){
 
-	if(strcmp(lType,"stdout") == 0){
-		printf("stdout log : [%s]\n",message);
-	}else if(strcmp(lType,"syslog") == 0){
-		printf("syslog log : [%s]\n",message);
-	}else{
-		printf("%s\n",message);
-	}
-	textcolor(RESET, WHITE, BLACK);
-	return 0;
+	void *tracePtrs[10];
+	size_t count;
+	count = backtrace(tracePtrs, 10);
+	char** funcNames = backtrace_symbols(tracePtrs, count);
+	syslog(LOG_ERR, "BEGIN CORE DUMP\n");
+	syslog(LOG_ERR, "-----------------------------------------------------\n");
+	for (int i = 0; i < count; i++)
+		syslog(LOG_EMERG, funcNames[i]);
+	syslog(LOG_ERR, "-----------------------------------------------------\n");
+	syslog(LOG_ERR, "END CORE DUMP\n");	
+	free(funcNames);
 }
 
-int errorf(const char *message){
-// ERROR Errors.
-// Yellow
-	textcolor(BRIGHT, YELLOW, BLACK);
-	
-	if(strcmp(lType,"stdout") == 0){
-		printf("stdout log : [%s]\n",message);
-	}else if(strcmp(lType,"syslog") == 0){
-		printf("syslog log : [%s]\n",message);
-	}else{
-		printf("%s\n",message);
+int infof(const char *format, ...)
+{
+	textcolor(BRIGHT, WHITE, BLACK);
+	va_list arg;
+	int done;
+	if(logDest == 0)
+	{
+		va_start (arg, format);
+		printf("INFO: ");
+		done = vfprintf (stdout, format, arg);
 	}
-	textcolor(RESET, WHITE, BLACK);
-	return 0;
+	else if(logDest == 1)
+	{
+		va_start (arg, format);
+		openlog ("Logger-INFO", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+		vsyslog(LOG_INFO, format, arg);
+		closelog();
+	}
+	va_end (arg);
+	printf("\033[0m");
+	return done;
 }
 
-int panicf(const char *message){
-// PANIC Panics. Non recoverable issues with core dump.
-// BLUE
-	textcolor(BRIGHT, BLUE, BLACK);
-	
-	if(strcmp(lType,"stdout") == 0){
-		printf("stdout log : [%s]\n",message);
-	}else if(strcmp(lType,"syslog") == 0){
-		printf("syslog log : [%s]\n",message);
-	}else{
-		printf("%s\n",message);
+int warnf(const char *format, ...)
+{
+	textcolor(BRIGHT, MAGENTA, BLACK);	
+	va_list arg;
+	int done;
+	if(logDest == 0)
+	{
+		va_start (arg, format);
+		printf("WARN: ");
+		done = vfprintf (stdout, format, arg);
 	}
-	textcolor(RESET, WHITE, BLACK);
-	return 0;
+	else if(logDest == 1)
+	{
+		va_start (arg, format);
+		openlog ("Logger-WARN", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+		vsyslog(LOG_WARNING, format, arg);
+		closelog();
+	}
+	va_end (arg);
+	printf("\033[0m");
+	return done;
 }
 
+int errorf(const char *format, ...)
+{
+	textcolor(BRIGHT, YELLOW, BLACK);	
+	va_list arg;
+	int done;
+	if(logDest == 0)
+	{
+		va_start (arg, format);
+		printf("ERROR: ");
+		done = vfprintf (stdout, format, arg);
+	}
+	else if(logDest == 1)
+	{
+		va_start (arg, format);
+		openlog ("Logger-ERROR", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+		vsyslog(LOG_ERR, format, arg);
+		closelog();
+	}
+	va_end (arg);
+	printf("\033[0m");
+	return done;
+}
+
+int panicf(const char *format, ...)
+{
+	textcolor(BRIGHT, RED, BLACK);	
+		va_list arg;
+	int done;
+	if(logDest == 0)
+	{
+		va_start (arg, format);
+		printf("PANIC: ");
+		done = vfprintf (stdout, format, arg);
+		printBacktrace();
+	}
+	else if(logDest == 1)
+	{
+		va_start (arg, format);
+		openlog ("Logger-PANIC", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+		vsyslog(LOG_ERR, format, arg);
+		printBacktraceSyslog();
+		closelog();
+	}
+	va_end (arg);
+	printf("\033[0m");
+	return done;
+}
 

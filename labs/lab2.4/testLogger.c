@@ -1,52 +1,20 @@
-#include <stdio.h>
-#include <string.h>
+#include "logger.h"
 
-#define INFO "INFO"
-#define WARN "WARN"
-#define ERROR "ERROR"
-#define PANIC "PANIC"
+//Implementation made by https://github.com/razonixx
 
-int pLogger(const char *format, const char *message);
-int initLogger(const char logType[]);
+int main(int argc, char const *argv[])
+{	
+	//initLogger("syslog");
+	initLogger("");
+	int myInt = 10;
+    double myDouble = 15.2;
+    float myFloat = 12.4f;
+    char myChar = 'H';
+    char *myString = "Hello World";
 
-int main(int argc, char **argv){
-	
-	//Default 
-	printf("\nDEFAULT examples:\n");	
-	pLogger(INFO,"This is an INFO message");
-	// INFO message
-	pLogger(WARN,"This is a WARN message");
-	// WARN message
-	pLogger(ERROR,"This is an ERROR message");
-	// ERROR message
-	pLogger(PANIC,"This is a PANIC");
-	// PANIC message
-
-	
-	//stdout 
-	initLogger("stdout");
-	printf("\nSTDOUT examples:\n");
-	pLogger(INFO,"This is an INFO message");
-	// INFO message
-	pLogger(WARN,"This is a WARN message");
-	// WARN message
-	pLogger(ERROR,"This is an ERROR message");
-	// ERROR message
-	pLogger(PANIC,"This is a PANIC");
-	// PANIC message
-	
-
-	//syslog
-	initLogger("syslog");
-	printf("\nSYSLOG examples:\n");
-	pLogger(INFO,"This is an INFO message");
-	// INFO message
-	pLogger(WARN,"This is a WARN message");
-	// WARN message
-	pLogger(ERROR,"This is an ERROR message");
-	// ERROR message
-	pLogger(PANIC,"This is a PANIC");
-	// PANIC message
-
+	infof("%cello, this is general information\n", myChar);	
+	warnf("%cello, this is a warning with code: %f\n", myChar, myDouble);
+	errorf("%cello, this is an error with code: %d\n", myChar, myInt);
+	panicf("%s, this is a panic with code: %f\n", myString, myFloat);
 	return 0;
 }

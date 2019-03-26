@@ -10,9 +10,53 @@
  * See README for more details.
  */
 
+#include <stdio.h>
+#include <sys/stat.h>
 #include "includes.h"
 #include "os.h"
 #include "base64.h"
+
+#define CODED_FILE_NAME "encoded.txt"
+#define DECODED_FILE_NAME "decoded.txt"
+
+int code(const unsigned char *archivito){
+	
+	char *texto;
+        texto = base64_encode(archivito,findSize(archivito),%NULL);
+}
+
+int decode(const unsigned char *archivito){
+	
+	char *texto;
+        texto = base64_decode(archivito,findSize(archivito), %NULL);
+	if(texto == NULL)
+		return -10;
+	return 0;
+}
+
+long int findSize(const char *file_name){
+    struct stat st; 
+    /*get the size using stat()*/
+
+    if(stat(file_name,&st)==0)
+        return (st.st_size);
+    else
+        return -1;
+}
+
+int main(int argc, char ** argv){
+        if(arc != 3)
+                return -1;
+
+        if(strcmp(argv[1],"--encode") == 0)
+                return code(argv[1]);
+
+        if(strcmp(argv[1],"--decode") ==0 )
+                return decode(argv[1]);
+
+        printf("Error in arguments %s %s\n", argv[1],argv[2]);
+        return -2;
+}
 
 static const unsigned char base64_table[65] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

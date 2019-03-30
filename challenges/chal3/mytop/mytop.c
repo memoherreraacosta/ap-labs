@@ -11,11 +11,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define SIZE_STR_VAL 60
-#define WAIT_TIME 4
+#define WAIT_TIME 3
 #define PROC_TO_CHECK 10000
 
-static void sigHand(int sig);
 int main(int argc, char **argv);
 void checkFile(char *logFile);
 void clear();
@@ -24,12 +22,12 @@ void printTable();
 void processLine(char *line);
 
 struct process{             // Struct to handle each process
-  char pid[SIZE_STR_VAL];
-  char parent[SIZE_STR_VAL];
-  char name[SIZE_STR_VAL];
-  char state[SIZE_STR_VAL];
-  char mem[SIZE_STR_VAL];
-  char threads[SIZE_STR_VAL];
+  char pid[10];
+  char parent[10];
+  char name[30];
+  char state[20];
+  char mem[20];
+  char threads[30];
   int files_open;
 };
 
@@ -40,12 +38,15 @@ void clear() {
   printf("\e[1;1H\e[2J"); 
 }
 
-void printTable(){
-
+void printTop(){
 	printf("|__________|__________|_______________|__________|__________|__________|______________________________|\n");
 	printf("|PID       |PPID      |STATUS         |THREADS   | MEMORY   |OPEN FILES|NAME                          |\n");
 	printf("|__________|__________|_______________|__________|__________|__________|______________________________|\n");
+}
 
+void printTable(){
+
+	printTop();
   float mem;
 	for(int i = 0; i < pPos; i++){
 		if(totalP[i].pid == 0){
@@ -63,43 +64,6 @@ void printTable(){
 	return;
 }
 
-static void sigHand(int sig){
-
-  char fName[100];
-  strcpy(fName, "mytop-status-");
-    
-  time_t rtime;
-  struct tm * timeinfo;
-  time ( &rtime );
-  timeinfo = localtime ( &rtime );
-  strcat(fName, asctime(timeinfo));
-  strcat(fName, ".txt");
-  float mem;
-
-	FILE *fd = fopen(fName, "w");
-
-	if(fd == NULL){
-		perror("Can't open file");
-		exit(1);
-	}
-	fprintf(fd,"|__________|__________|_______________|__________|__________|__________|______________________________|\n");
-	fprintf(fd,"|PID       |PPID      |STATUS         |THREADS   | MEMORY   |OPEN FILES|NAME                          |\n");
-	fprintf(fd,"|__________|__________|_______________|__________|__________|__________|______________________________|\n");
-
-	for(int i = 0; i < pPos; i++){
-		if(totalP[i].pid == 0){
-			continue;
-		}
-		mem = atof(totalP[i].mem) / 1000;
-		
-		fprintf(fd, "|%8s|%8s|%15s|%7s|%8.4f M|%10i|%40s|\n", totalP[i].pid, totalP[i].parent, totalP[i].state, totalP[i].threads, mem, totalP[i].files_open, totalP[i].name);	
-
-	}
-	fprintf(fd, "|__________|__________|_______________|__________|__________|__________|______________________________|\n");
-	fclose(fd);  
-	printf("Saved in file %s\n", fName);
-}
-
 void cOFiles(char *fpath){
 	
   int openFiles;
@@ -109,7 +73,6 @@ void cOFiles(char *fpath){
 
 	while((fd_dir = readdir(fdd)) != NULL)
 		openFiles++;
-	
 
 	closedir(fdd);
 	totalP[pPos].files_open = openFiles - 2;
@@ -125,8 +88,8 @@ void checkFile(char *logFile) {
 	  printf("cannot open file");
   }
 
-  char line[500]; 
-  memset(line, 0, 500);
+  char line[400]; 
+  memset(line, 0, 400);
 
   while((c = read(fp, f, 1)) > 0){
 	  *f = tolower(*f);
@@ -169,11 +132,10 @@ void processLine(char *line){
 
 	          if(line[i] != ' ' && 
                line[i] != ':' && 
-              line[i] != '\t' && 
+               line[i] != '\t' && 
                line[i] != '\n'){
-
-		          data[j] = line[i];
-			        j++;
+									data[j] = line[i];
+			        		j++;
   	        }	
       }
 	      if (strcmp(buff, "vmrs") == 0){
@@ -187,24 +149,16 @@ void processLine(char *line){
         }	
   	}
   	}
-      if (strcmp(buff, "pid") == 0){
-	      strcpy(totalP[pPos].pid, data);
-      }else if (strcmp(buff, "ppid") == 0){
-	      strcpy(totalP[pPos].parent, data);
-      }else if (strcmp(buff, "name") == 0){
-	      strcpy(totalP[pPos].name, data);
-     }else if (strcmp(buff, "stat") == 0){
-	      strcpy(totalP[pPos].state, data);
-     }else if (strcmp(buff, "thre") == 0){
-	      strcpy(totalP[pPos].threads, data);
-     }else if (strcmp(buff, "vmrs") == 0){
-	      strcpy(totalP[pPos].mem, data);
-     }
+    if (strcmp(buff, "pid") == 0){ 					strcpy(totalP[pPos].pid, data);
+    }else if (strcmp(buff, "ppid") == 0){		strcpy(totalP[pPos].parent, data);
+    }else if (strcmp(buff, "name") == 0){		strcpy(totalP[pPos].name, data);
+    }else if (strcmp(buff, "stat") == 0){		strcpy(totalP[pPos].state, data);
+    }else if (strcmp(buff, "thre") == 0){		strcpy(totalP[pPos].threads, data);
+    }else if (strcmp(buff, "vmrs") == 0){		strcpy(totalP[pPos].mem, data);
+    }
 }
 
 int main(int argc, char **argv){
-	if (signal(SIGINT, sigHand) == SIG_ERR)
-    perror("Error handling signals\n");
 	
 	struct dirent *dir;
   DIR *d = opendir("/proc/");

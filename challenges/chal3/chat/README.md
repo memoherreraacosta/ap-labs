@@ -1,4 +1,4 @@
-Simple IRC Server
+Simple IRC Server Instructions
 =================
 Implement a simple [IRC](https://en.wikipedia.org/wiki/Internet_Relay_Chat) server with a client-server architecture.
 
@@ -17,10 +17,6 @@ Requirements
 | `/msg <user> <msg>` | To send a direct message to the specified `user`        |
 | `/time`             | Get IRC Server's localtime                              |
 | `/user <user>`      | Get more details about `user` (Username and IP address) |
-
-- You need to follow the output format guidelines.
-- Coding best practices that we learned in class will be reviewed.
-- Before submitting you code, make sure it's compiling and running correctly.
 
 
 Sample IRC Server output
@@ -69,19 +65,27 @@ user1 > /user user2
 irc-server > username: user2, IP: 192.168.1.22
 ```
 
-Grading
+To Run The Server
 -------
-| Requirement            |      |
-|------------------------|------|
-| /users                 | 20%  |
-| /msg <user> <msg>      | 20%  |
-| /time                  | 20%  |
-| /user <user>           | 20%  |
-| Conding best practices | 20%  |
-| TOTAL                  | 100% |
 
-Useful links
-------------
-- https://github.com/adonovan/gopl.io/tree/master/ch8/chat
-- https://github.com/adonovan/gopl.io/tree/master/ch8/netcat3
-- https://golang.org/pkg/flag/
+```
+- Format
+    $ go run server.go -host [host] -port [port]
+
+- Example 
+    $ go run server.go -host localhost -port 9000
+
+```
+
+
+To Run The Client
+-------
+
+```
+- Format
+    $ go run client.go -user [user] -server [ host : port ]
+
+- Example 
+    $ go run server.go -host localhost -port 9000
+
+```

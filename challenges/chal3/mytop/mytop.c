@@ -189,6 +189,7 @@ int magic(){
 	  f++;
   }
   clear();
+  return 0;
 }
 
 int main(int argc, char **argv){

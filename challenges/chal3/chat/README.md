@@ -86,6 +86,6 @@ To Run The Client
     $ go run client.go -user [user] -server [ host : port ]
 
 - Example 
-    $ go run server.go -host localhost -port 9000
+    $ go run client.go -user Memo -server localhost:9000
 
 ```

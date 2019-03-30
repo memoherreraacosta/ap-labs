@@ -1,17 +1,6 @@
-/*
- *	Code implemented by http://web.mit.edu/freebsd/head/contrib/wpa/src/utils/base64.c
- */
-
-/*
- * Base64 encoding/decoding (RFC1341)
- * Copyright (c) 2005-2011, Jouni Malinen <j@w1.fi>
- *
- * This software may be distributed under the terms of the BSD license.
- * See README for more details.
- */
-
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include "includes.h"
 #include "os.h"
 #include "base64.h"
@@ -19,49 +8,94 @@
 #define CODED_FILE_NAME "encoded.txt"
 #define DECODED_FILE_NAME "decoded.txt"
 
-int code(const unsigned char *archivito){
-	
-	char *texto;
-        texto = base64_encode(archivito,findSize(archivito),%NULL);
-}
-
-int decode(const unsigned char *archivito){
-	
-	char *texto;
-        texto = base64_decode(archivito,findSize(archivito), %NULL);
-	if(texto == NULL)
-		return -10;
-	return 0;
-}
-
-long int findSize(const char *file_name){
-    struct stat st; 
-    /*get the size using stat()*/
-
-    if(stat(file_name,&st)==0)
-        return (st.st_size);
-    else
-        return -1;
-}
-
-int main(int argc, char ** argv){
-        if(arc != 3)
-                return -1;
-
-        if(strcmp(argv[1],"--encode") == 0)
-                return code(argv[1]);
-
-        if(strcmp(argv[1],"--decode") ==0 )
-                return decode(argv[1]);
-
-        printf("Error in arguments %s %s\n", argv[1],argv[2]);
-        return -2;
-}
+// Declaration of methods
+unsigned long long fSize(FILE *fp);
+int code(const char *archivito);
+int decode(const char *archivito);
+int writeFile(const char* nameFile, unsigned char* buff, size_t size);
+unsigned char * base64_encode(const unsigned char *src, size_t len, size_t *out_len);
+unsigned char * base64_decode(const unsigned char *src, size_t len,size_t *out_len);
 
 static const unsigned char base64_table[65] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-/**
+int main(int argc, char ** argv){
+    if(argc != 3)
+        return -1;
+
+    if(strcmp(argv[1],"--encode") == 0)
+        return code(argv[2]);
+
+    if(strcmp(argv[1],"--decode") ==0 )
+        return decode(argv[2]);
+
+    printf("Error in arguments [ %s %s ]\n", argv[1],argv[2]);
+    return -2;
+}
+
+int code(const char *archivito){
+	
+	unsigned char *texto;
+	size_t sArch;
+
+	FILE *arch = fopen(archivito, "r");
+	if (arch == NULL){
+    	printf("Error opening file! %s\n",archivito);
+    	exit(1);
+	}
+	fseek(arch, 0L, SEEK_END); 
+  
+    // calculating the size of the file 
+    sArch = (size_t)ftell(arch);
+    fclose(arch);
+	
+	texto = base64_encode(archivito,sArch,NULL);
+
+	if(texto == NULL)
+		return -10;
+	
+	//Asignar al texto
+	return 0;
+}
+
+int decode(const char *archivito){
+	
+	unsigned char *texto;
+	size_t sArch;
+
+	FILE *arch = fopen(archivito, "r");
+	if (arch == NULL){
+    	printf("Error opening file! %s\n",archivito);
+    	exit(1);
+	}
+    fseek(arch, 0L, SEEK_END); 
+  
+    // calculating the size of the file 
+    sArch = (size_t)ftell(arch);
+
+    fclose(arch);
+
+	texto = base64_decode(archivito,sArch,NULL);
+	if(texto == NULL)
+		return -10;
+	
+	//Asignar al texto
+	return 0;
+}
+
+unsigned long long fSize(FILE *fp){
+    struct stat size;
+    fstat(fileno(fp), &size);
+    return size.st_size;
+}
+
+/*
+ * Base64 encoding/decoding (RFC1341)
+ * Copyright (c) 2005-2011, Jouni Malinen <j@w1.fi>
+ *
+ * This software may be distributed under the terms of the BSD license.
+ * See README for more details.
+ * 
  * base64_encode - Base64 encode
  * @src: Data to be encoded
  * @len: Length of the data to be encoded
@@ -73,8 +107,7 @@ static const unsigned char base64_table[65] =
  * nul terminated to make it easier to use as a C string. The nul terminator is
  * not included in out_len.
  */
-unsigned char * base64_encode(const unsigned char *src, size_t len,
-			      size_t *out_len)
+unsigned char * base64_encode(const unsigned char *src, size_t len, size_t *out_len)
 {
 	unsigned char *out, *pos;
 	const unsigned char *end, *in;
@@ -141,8 +174,7 @@ unsigned char * base64_encode(const unsigned char *src, size_t len,
  *
  * Caller is responsible for freeing the returned buffer.
  */
-unsigned char * base64_decode(const unsigned char *src, size_t len,
-			      size_t *out_len)
+unsigned char * base64_decode(const unsigned char *src, size_t len,size_t *out_len)
 {
 	unsigned char dtable[256], *out, *pos, block[4], tmp;
 	size_t i, count, olen;

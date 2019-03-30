@@ -2,19 +2,6 @@ MyTop
 =====
 Implement a new version of the `top` tool. The only source of information about processes  will be the `/proc` filesystem. This should be a real-time application that automatically updates the dashboard with new and terminated processes. Below more details about the requirements.
 
-Requirements
-------------
-- The program must be implemented in C programming language.
-- Use the provided template `mytop.c`
-- As a realtime app, screen should be automatically updated with any change in processes.
-- A multi-threaded implementation can be used here.
-- Add support for current processes dashboard snapshots to file (mytop-status-XXXXXX).
-  - Use the `SIGINT` to capture the current processes dashboard
-  - Save the current processes dashboard to a new file mytop-status-DATE
-- You need to follow the output format guidelines.
-- Coding best practices that we learned in class will be reviewed.
-- Before submitting you code, make sure it's compiling and running correctly.
-
 
 Sample mytop output
 -------------------
@@ -29,19 +16,17 @@ Sample mytop output
 | 16887 | 16886  | test-app       | Sleeping | 17M    | 1         | 7          |
 ```
 
-Grading
--------
-| Requirement                    |      |
-|--------------------------------|------|
-| Process IDs (PID and Parent)   | 20%  |
-| State, Memory & # of Threads   | 20%  |
-| Open Files                     | 20%  |
-| MyTop Status Snapshots         | 20%  |
-| Conding best practices         | 20%  |
-| TOTAL                          | 100% |
+To Build
+--------------------
 
-Useful links and resources
---------------------------
-- https://www.tldp.org/LDP/Linux-Filesystem-Hierarchy/html/proc.html
-- `man proc` command
-- `/proc/<PID>/status` per-process file
+```
+	$ make
+```
+
+
+To Run
+-------------------
+
+```
+	$ sudo ./mytop
+```	

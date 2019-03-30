@@ -15,6 +15,7 @@
 #define PROC_TO_CHECK 10000
 
 int main(int argc, char **argv);
+int magic();
 void checkFile(char *logFile);
 void clear();
 void cOFiles();
@@ -158,8 +159,7 @@ void processLine(char *line){
     }
 }
 
-int main(int argc, char **argv){
-	
+int magic(){
 	struct dirent *dir;
   DIR *d = opendir("/proc/");
 	char path[30], fpath[30];
@@ -189,5 +189,8 @@ int main(int argc, char **argv){
 	  f++;
   }
   clear();
-  return 0;
+}
+
+int main(int argc, char **argv){
+  return magic();
 }

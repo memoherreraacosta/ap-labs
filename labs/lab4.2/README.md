@@ -45,33 +45,3 @@ Some key required global variables
 
 
 Matrix multiplication
----------------------
-
-- You will have a loop that is creating NxN (2000*2000) concurrent threads for calculating the `row*col` operations between `matA` and `matB`.
-- Each thread will execute `row*col` operation and will use available buffers for storing the result of the dot product.
-`getLock` function will be required to get a buffer to have a place where to store the dot product result, if there's no available buffer, thread will need to wait.
-`releaseLock` will be used to release a buffer to be used by another thread.
-- At the end, you'll wait for all processes to join the main execution.
-- Finally, save your result by calling the `saveResultMatrix` function.
-
-
-Data files
-----------
-`matA.dat` and `matB.dat` are located at:
-- [Classify Share](https://console.cloud.google.com/storage/browser/classify-share)
-
-
-Final Requirements and Considerations
----------------------------------------
-- Use the logger that was done on [lab2.4](https://github.com/CodersSquad/ap-labs/tree/master/labs/lab2.4).
-- Use the `*.c` files for implementing your code.
-- Use the `Makefile` for compilation.
-- Update `README.md` with the proper steps for building and running your code.
-- Don't forget to handle errors properly.
-- Coding best practices implementation will be also considered.
-
-
-Submission Details
-==================
-
-Read [Classify API](../../classify.md)

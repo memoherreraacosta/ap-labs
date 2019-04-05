@@ -11,12 +11,16 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 /* Define global data where everyone can see them */
 #define NUMTHRDS 8
 #define VECLEN 100000
 int *a, *b;
 long sum=0;
+
+/* A mutex thread will be added */
+pthread_mutex_t mutexito;
 
 void *dotprod(void *arg)
 {
@@ -33,10 +37,12 @@ void *dotprod(void *arg)
 
     /* Perform my section of the dot product */
     printf("thread: %ld starting. start=%d end=%d\n",tid,start,end-1);
-    for (i=start; i<end ; i++)
-	sum += (a[i] * b[i]);
-    printf("thread: %ld done. Global sum now is=%li\n",tid,sum);
-
+    for (i=start; i<end ; i++){
+        pthread_mutex_lock(&mutexito);
+	    sum += (a[i] * b[i]);
+        printf("thread: %ld done. Global sum now is=%li\n",tid,sum);
+        pthread_mutex_unlock(&mutexito);
+    }
     pthread_exit((void*) 0);
 }
 
@@ -53,8 +59,15 @@ int main (int argc, char *argv[])
     a = (int*) malloc (NUMTHRDS*VECLEN*sizeof(int));
     b = (int*) malloc (NUMTHRDS*VECLEN*sizeof(int));
 
+    
+
     for (i=0; i<VECLEN*NUMTHRDS; i++)
 	a[i]= b[i]=1;
+
+
+    /* mutexito mutex thread is initialized */
+
+    pthread_mutex_init(&mutexito,NULL);
 
     /* Create threads as joinable, each of which will execute the dot product
      * routine. Their offset into the global vectors is specified by passing
@@ -75,6 +88,6 @@ int main (int argc, char *argv[])
     printf ("Final Global Sum=%li\n",sum);
     free (a);
     free (b);
+    pthread_attr_destroy(&mutexito);
     pthread_exit(NULL);
-
 }

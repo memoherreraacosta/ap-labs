@@ -58,7 +58,6 @@ void *watch_count(void *t)
     long my_id = (long)t;
 
     printf("Starting watch_count(): thread %ld\n", my_id);
-
     /*
       Lock mutex and wait for signal.  Note that the pthread_cond_wait routine
       will automatically and atomically unlock mutex while it waits.

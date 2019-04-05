@@ -8,6 +8,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include "logger.h"
 /*
      The following structure contains the necessary information
@@ -55,7 +56,7 @@ void dotprod()
 
     mysum = 0;
     for (i=start; i<end ; i++) {
-	mysum += (x[i] * y[i]);
+      mysum += (x[i] * y[i]);
     }
     dotstr.sum = mysum;
 

@@ -71,7 +71,7 @@ void *dotprod(void *arg)
     */
     mysum = 0;
     for (i=start; i<end ; i++){
-	mysum += (x[i] * y[i]);
+	    mysum += (x[i] * y[i]);
     }
 
     /*

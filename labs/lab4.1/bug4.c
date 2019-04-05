@@ -25,10 +25,10 @@ void *sub1(void *t)
 {
     int i;
     long tid = (long)t;
-    double myresult=0.0;
+    //double myresult=0.0;
 
     /* do some work */
-    sleep(1);
+    
     /*
       Lock mutex and wait for signal only if count is what is expected.  Note
       that the pthread_cond_wait routine will automatically and atomically
@@ -38,10 +38,15 @@ void *sub1(void *t)
       work is now done within the mutex lock of count.
     */
     pthread_mutex_lock(&count_mutex);
+    while(count < THRESHOLD){
     printf("sub1: thread=%ld going into wait. count=%d\n",tid,count);
     pthread_cond_wait(&count_condvar, &count_mutex);
     printf("sub1: thread=%ld Condition variable signal received.",tid);
     printf(" count=%d\n",count);
+    }
+
+    
+    sleep(1);
     count++;
     finalresult += myresult;
     printf("sub1: thread=%ld count now equals=%d myresult=%e. Done.\n",
@@ -68,7 +73,11 @@ void *sub2(void *t)
 	*/
 	if (count == THRESHOLD) {
 	    printf("sub2: thread=%ld Threshold reached. count=%d. ",tid,count);
-	    pthread_cond_signal(&count_condvar);
+
+        // pthread_cond_signal() changed to pthreag_cond_broadcast()
+	    pthread_cond_broadcast(&count_condvar);
+        //
+
 	    printf("Just sent signal.\n");
 	}
 	else {
@@ -86,7 +95,7 @@ int main(int argc, char *argv[])
 {
     long t1=1, t2=2, t3=3;
     int i, rc;
-    pthread_t threads[3];
+    pthread_t threads[NUM_THREADS];
     pthread_attr_t attr;
 
     /* Initialize mutex and condition variable objects */

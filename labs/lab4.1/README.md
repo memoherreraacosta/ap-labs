@@ -1,9 +1,8 @@
 Lab 4.1 - Mutexes and Conditional Variables
 ===========================================
 
-
-
-#Instructions
+Instructions
+--------------
 
 Mutexes
 -------

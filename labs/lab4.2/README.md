@@ -35,9 +35,9 @@ Some key required global variables
 ----------------------------------
 
 - `NUM_BUFFERS`
-  Number of temporal buffers for dot product operations
+  Number of temporal buffers for vectors that will be used for each dot product.
 - `long **buffers`
-  An array of `NUM_BUFFERS` pointers to the available buffers that will serve as temporal rows to be stored into final result matrix.
+  An array of `NUM_BUFFERS` pointers to the available buffers that will serve as temporal vectors for dot product operations.
 - `pthread_mutex_t *mutexes`
   Mutexes that will help to know which buffer is available
 - `long * result`
@@ -45,3 +45,35 @@ Some key required global variables
 
 
 Matrix multiplication
+---------------------
+
+- You will have a loop that is creating NxN (2000*2000) threads in lots of 2000 concurrent processes for calculating the `row*col` operations between `matA` and `matB`.
+- The idea of having 2000 concurrent processes is to play with the synchronization of the "limited" memory you have with the defined number of buffers (`NUM_BUFFERS`).
+- Each thread will execute `row*col` operation and will use available 2 buffers for temporaly storing the 2 arrays that are required for calculating the dot product.
+`getLock` function will be required to get a buffer for storing a vector, if there's no available buffer, thread will need to wait.
+`releaseLock` will be used to release a buffer to be used by another thread.
+- At the end, you'll wait for all processes to join the main execution.
+- Each lot of 2000 threads goal will represent a row in the final matrices multiplication result.
+- Finally, save your result by calling the `saveResultMatrix` function.
+
+
+Data files
+----------
+`matA.dat` and `matB.dat` are located at:
+- [Classify Share](https://console.cloud.google.com/storage/browser/classify-share)
+
+
+Final Requirements and Considerations
+---------------------------------------
+- Use the logger that was done on [lab2.4](https://github.com/CodersSquad/ap-labs/tree/master/labs/lab2.4).
+- Use the `*.c` files for implementing your code.
+- Use the `Makefile` for compilation.
+- Update `README.md` with the proper steps for building and running your code.
+- Don't forget to handle errors properly.
+- Coding best practices implementation will be also considered.
+
+
+Submission Details
+==================
+
+Read [Classify API](../../classify.md)

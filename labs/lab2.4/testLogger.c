@@ -5,7 +5,7 @@
 int main(int argc, char const *argv[])
 {	
 	//initLogger("syslog");
-	initLogger("");
+	//initLogger("");
 	int myInt = 10;
     double myDouble = 15.2;
     float myFloat = 12.4f;

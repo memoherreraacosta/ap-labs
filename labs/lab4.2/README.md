@@ -53,7 +53,7 @@ $ make
 
 " $ ./multipler -n 'NUM_BUFFERS' "
 
- + It is recomended to use a number bigger than 12 and smaller than 100 to have an optimum resources handling in execution. 
+ + It is recomended to use a number bigger than 12 and smaller than 99 to have an optimum resources handling in execution. 
 
 Example: 
 

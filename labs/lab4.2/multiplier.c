@@ -191,6 +191,17 @@ int main(int argc, char **argv){
 
 	NUM_BUFFERS = strtol(argv[2], NULL, 10);
 
+	if(NUM_BUFFERS < 1){
+		errorf("Invalid number of buffers : %d , must be greater than 0\n",NUM_BUFFERS);
+		exit(EXIT_FAILURE);
+	}
+
+	if(NUM_BUFFERS < 12){
+		warnf("[ %d ] number of buffers might cause errors in execution time, it is recomended to use (minimum) [ 12 ] buffers\n",NUM_BUFFERS);
+	}	
+
+	infof("Program start running with [ %d ] number of buffers\n",NUM_BUFFERS);
+
 	buffers = (long **)malloc(NUM_BUFFERS * sizeof(long *));
 	mutexes = (pthread_mutex_t *) malloc(NUM_BUFFERS * sizeof(pthread_mutex_t));
 

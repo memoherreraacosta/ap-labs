@@ -130,6 +130,7 @@ long * multiply(long *matA, long *matB){
 
 			pthread_create(&threads[j], NULL , threadFunc , (void *)vector);
 		}
+		printf("%d\n",i);
 
 		for ( j = 0; j < MATRIX_DIMENSION; j++)
 			pthread_join(threads[j], NULL);

@@ -41,18 +41,16 @@ long * readMatrix(char *filename){
         exit(1);
     }
 
-    long *res;
-    res = (long *)malloc(MATRIX_NUM_ELEMENTS * sizeof(long));
-    int num;
-    int i;
+    long *res = (long *)malloc(MATRIX_NUM_ELEMENTS * sizeof(long));
+    char *num = NULL;
+	int i;
+	size_t len = 0;
 
-    for(i = 0; (num = fgetc(f))!= EOF ; i++)
-        if(num != ' ' && num != '\n')
-            res[i] = num;
-    
-    res[i+1] = EOF;
+    for(i = 0; (getline(&num, &len, f)) != -1 ; i++)
+        res[i] = strtol(num, NULL, 10);
 
     fclose(f); 
+	free(num);
     return res;
 }
 
@@ -136,6 +134,7 @@ long * multiply(long *matA, long *matB){
 		for ( j = 0; j < MATRIX_DIMENSION; j++)
 			pthread_join(threads[j], NULL);
 
+		fflush(stdout);
 	}
 
 	return resMul;
@@ -185,9 +184,11 @@ void *threadFunc(void *arg)
 int main(int argc, char **argv){
     
 	if(argc != 3 || strcmp("-n",argv[1]) != 0){
-		errorf("Invalid format [./multiplier -n NUM_BUFFERS'] expected  \n");
+		errorf("Invalid format [./multiplier -n NUM_BUFFERS] expected  \n");
 		exit(EXIT_FAILURE);
 	}
+
+	NUM_BUFFERS = strtol(argv[2], NULL, 10);
 
 	buffers = (long **)malloc(NUM_BUFFERS * sizeof(long *));
 	mutexes = (pthread_mutex_t *) malloc(NUM_BUFFERS * sizeof(pthread_mutex_t));
@@ -197,6 +198,8 @@ int main(int argc, char **argv){
 		mutexes[i] = mutex;
 		pthread_mutex_init(&mutexes[i], NULL);
 	}
+
+	infof("Threads initialized correctly \n");
 
 	long *mA, *mB;
 	mA = readMatrix("matA.dat");

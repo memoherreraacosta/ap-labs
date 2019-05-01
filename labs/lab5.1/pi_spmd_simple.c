@@ -58,7 +58,7 @@ int main ()
 	    sum[id] = 0.0;
 
 	    if (id == 0)
-		printf(" num_threads = %d",numthreads);
+		infof(" num_threads = %d",numthreads);
 
 	    for (i=id;i< num_steps; i+=numthreads){
 		x = (i+0.5)*step;
@@ -71,6 +71,6 @@ int main ()
 
 	pi = step * full_sum;
 	run_time = omp_get_wtime() - start_time;
-	printf("\n pi is %f in %f seconds %d thrds \n",pi,run_time,j);
+	infof("\n pi is %f in %f seconds %d thrds \n",pi,run_time,j);
     }
 }

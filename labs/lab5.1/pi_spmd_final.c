@@ -36,7 +36,7 @@ int main ()
  	int j,i;
     double pi, full_sum = 0.0;
     double start_time, run_time;
- 	double sum[MAX_THREADS];
+    double sum[MAX_THREADS];
 
     step = 1.0/(double) num_steps;
 
@@ -57,7 +57,7 @@ int main ()
         double partial_sum = 0;
 
 	    #pragma opm single
-		printf(" num_threads = %d",numthreads);
+		infof(" num_threads = %d",numthreads);
 
 	    for ( i=i ; i< num_steps ; i+=numthreads){
 		    x = (i+0.5)*step;
@@ -71,6 +71,6 @@ int main ()
 
 	pi = step * full_sum;
 	run_time = omp_get_wtime() - start_time;
-	printf("\n pi is %f in %f seconds %d thrds \n",pi,run_time,j);
+	infof("\n pi is %f in %f seconds %d thrds \n",pi,run_time,j);
     }   
 }

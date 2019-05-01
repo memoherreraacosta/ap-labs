@@ -100,8 +100,8 @@ int main ()
 
    for(i=0;i<num_trials; i++)
 	{
-	    x = randomH();
-	    y = randomH();
+	    x = random();
+	    y = random();
 
 	    test = x*x + y*y;
 

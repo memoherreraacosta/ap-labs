@@ -110,7 +110,7 @@ int main ()
 
     pi = 4.0 * ((double)Ncirc/(double)num_trials);
 
-    infof("\n %ld trials, pi is %f \n",num_trials, pi);
+    infof("%ld trials, pi is %f \n",num_trials, pi);
 
     return 0;
 }

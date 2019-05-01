@@ -60,7 +60,7 @@ int main (int argc, char **argv){
 	
     pi = step * full_sum;
 	run_time = omp_get_wtime() - start_time;
-	infof("\n pi is %f in %f seconds %d thrds \n",pi,run_time,j);
+	infof(" pi is %f in %f seconds %d thrds \n",pi,run_time,j);
     }
     return 0;
 }

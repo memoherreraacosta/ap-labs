@@ -1,31 +1,42 @@
 Lab 5.1 - OpenMP Labs
 =====================
 
-This is a single lab for multiple OpenMP exercises that we'll be doing in class. Below you can see the list of exercises that
-will considered for the lab's grading. The goal of each exercise is to convert its default serial implementation to
+This is a single lab for multiple OpenMP exercises. 
+Below you can see the list of exercises that
+will considered for the lab's grading. 
+The goal of each exercise is to convert its default serial implementation to
 a parallel implementation with OpenMP.
+
+
+Exercises :
+---------------------------------------
 
 | Exercise Name          | Serial Implementation | Parallel Implementation                            |
 |------------------------|-----------------------|----------------------------------------------------|
-| Hello World            | `hello.c`             | `hello_par.c`                                      |
-| Integral PI Compute    | `pi.c`                | `pi_spmd_simple.c`, `pi_spmd_final.c`, `pi_loop.c` |
-| Monte Carlo PI Compute | `pi_mc.c`             | `pi_mc_par.c`                                      |
-| Matrix Multiplication  | `matmul.c`            | `matmul_par.c`                                     |
-| Producer/Consumer      | `prod_cons.c`         | `prod_cons_par.c`                                  |
+| Hello World            | [hello.c](hello.c)             | [hello_par.c](hello_par.c)                                     |
+| Integral PI Compute    | [pi.c](pi.c)                | [pi_spmd_simple.c](pi_spmd_simple.c), [pi_spmd_final.c](pi_spmd_final.c), [pi_loop.c](pi_loop.c) |
+| Monte Carlo PI Compute | [pi_mc.c](pi_mc.c)             | [pi_mc_par.c](pi_mc_par.c)                                      |
+| Matrix Multiplication  | [matmul.c](matmul.c)            | [matmul_par.c](matmul_par.c)                                     |
+| Producer/Consumer      | [prod_cons.c](prod_cons.c)         | [prod_cons_par.c](prod_cons_par.c)                                  |
 
 
-
-Final Requirements and Considerations
+Build and Run :
 ---------------------------------------
-- Use the logger that was done on [lab2.4](https://github.com/CodersSquad/ap-labs/tree/master/labs/lab2.4).
-- Use the `*.c` files for implementing your code.
-- Use the `Makefile` for compilation.
-- Update `README.md` with the proper steps for building and running your code.
-- Don't forget to handle errors properly.
-- Coding best practices implementation will be also considered.
 
+* To Build all the implementations, write down the following command
 
-Submission Details
-==================
+````
+    $ make 
+````
 
-Read [Classify API](../../classify.md)
+* To run an implementation, write down the following command
+
+````
+    $ ./[ NAME_OF_THE_FILE ]
+````
+
+    Example :
+
+````
+    $ ./pi_mc_par.c
+````

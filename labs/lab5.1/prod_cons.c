@@ -52,5 +52,5 @@ int main()
 
     runtime = omp_get_wtime() - runtime;
 
-    printf(" In %lf seconds, The sum is %lf \n",runtime,sum);
+    infof(" In %lf seconds, The sum is %lf \n",runtime,sum);
 }

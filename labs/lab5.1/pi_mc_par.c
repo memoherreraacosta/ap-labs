@@ -98,7 +98,7 @@ int main ()
 
     seed(-r, r);  // The circle and square are centered at the origin
 
-    #pragma omp parallel for reduction (++Ncirc)
+    #pragma omp parallel for reduction (+:Ncirc)
     for(i=0;i<num_trials; i++){
 	    x = random();
 	    y = random();

@@ -33,10 +33,10 @@ static long num_steps = 100000000;
 double step;
 int main ()
 {
-    int i,j;
+ 	int j,i;
     double pi, full_sum = 0.0;
     double start_time, run_time;
-    double sum[MAX_THREADS];
+ 	double sum[MAX_THREADS];
 
     step = 1.0/(double) num_steps;
 
@@ -47,7 +47,7 @@ int main ()
 	full_sum=0.0;
 	start_time = omp_get_wtime();
 
-#pragma omp parallel private(i)
+ 	#pragma omp parallel private(i)
 	{
 	    int i;
 	    int id = omp_get_thread_num();
@@ -56,15 +56,16 @@ int main ()
 
         double partial_sum = 0;
 
-	   #pragma opm single
+	    #pragma opm single
 		printf(" num_threads = %d",numthreads);
 
-	    for (i=id;i< num_steps; i+=numthreads){
+	    for ( i=i ; i< num_steps ; i+=numthreads){
 		    x = (i+0.5)*step;
 		    partial_sum += 4.0/(1.0+x*x);
 	    }
-        #pragma omp critical
-        full_sum += partial_sum;
+
+       #pragma omp critical
+       full_sum += partial_sum;
 
 	}
 

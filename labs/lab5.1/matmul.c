@@ -92,9 +92,9 @@ int main(int argc, char **argv)
     }
 
     if (errsq > TOL)
-	errorf("\n Errors in multiplication: %f",errsq);
+	errorf("Errors in multiplication: %f\n",errsq);
     else
-	infof("\n Hey, it worked");
+	infof("Hey, it worked\n");
 
-    infof("\n all done \n");
+    infof("all done \n");
 }

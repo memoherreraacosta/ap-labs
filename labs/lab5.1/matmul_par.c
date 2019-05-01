@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     /* Do the matrix product */
     start_time = omp_get_wtime();
 
-    #pragma omp parallel for
+    #pragma omp for
     for (i=0; i<Ndim; i++){
 	for (j=0; j<Mdim; j++){
 	    tmp = 0.0;
@@ -93,9 +93,9 @@ int main(int argc, char **argv)
     }
 
     if (errsq > TOL)
-	errorf("\n Errors in multiplication: %f",errsq);
+	errorf("Errors in multiplication: %f\n",errsq);
     else
-	infoff("\n Hey, it worked");
+	infof("Hey, it worked\n");
 
-    infof("\n all done \n");
+    infof("all done \n");
 }

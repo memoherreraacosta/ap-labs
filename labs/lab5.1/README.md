@@ -5,7 +5,7 @@ This is a single lab for multiple OpenMP exercises.
 Below you can see the list of exercises that
 will considered for the lab's grading. 
 The goal of each exercise is to convert its default serial implementation to
-a parallel implementation with OpenMP.
+a parallel implementation with [OpenMP](https://computing.llnl.gov/tutorials/openMP/#Introduction).
 
 
 Exercises :

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -20,7 +22,14 @@ type vector struct {
 	y float64
 }
 
+func divmod(numerator, denominator int) (quotient, remainder int) {
+	quotient = numerator / denominator
+	remainder = numerator % denominator
+	return
+}
+
 func main() {
+
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		fmt.Println("initializing SDL:", err)
 		return
@@ -46,12 +55,42 @@ func main() {
 
 	elements = append(elements, newPlayer(renderer))
 
-	for i := 0; i < 5; i++ {
-		for j := 0; j < 3; j++ {
-			x := (float64(i)/5)*screenWidth + (basicEnemySize / 2.0)
-			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
+	// Initialize enemies
+	numEnemies, err := strconv.Atoi(os.Args[1])
 
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	nRow := 4 // Number of row STATIC
+	nCol, res := divmod(numEnemies, nRow)
+
+	// Case number of enemies modify number of rows and columns
+	if res != 0 {
+		fmt.Println(res)
+		nCol++
+		for i := 0; i < nCol; i++ {
+			for j := 0; j < nRow-1; j++ {
+				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
+				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
+				elements = append(elements, newBasicEnemy(renderer, x, y))
+			}
+		}
+		nCol--
+		for i := 0; i < res; i++ {
+			j := nRow - 1
+			x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
+			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
 			elements = append(elements, newBasicEnemy(renderer, x, y))
+		}
+
+	} else {
+		for i := 0; i < nCol; i++ {
+			for j := 0; j < nRow; j++ {
+				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
+				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
+				elements = append(elements, newBasicEnemy(renderer, x, y))
+			}
 		}
 	}
 

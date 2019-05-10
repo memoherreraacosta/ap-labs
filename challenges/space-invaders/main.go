@@ -60,6 +60,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println(err)
+		numEnemies = 30
 	}
 
 	nRow := 4 // Number of row STATIC

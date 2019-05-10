@@ -59,7 +59,7 @@ func main() {
 	numEnemies, err := strconv.Atoi(os.Args[1])
 
 	if err != nil {
-		fmt.Println(err)
+		//fmt.Println(err)
 		numEnemies = 30
 	}
 
@@ -68,7 +68,6 @@ func main() {
 
 	// Case number of enemies modify number of rows and columns
 	if res != 0 {
-		fmt.Println(res)
 		nCol++
 		for i := 0; i < nCol; i++ {
 			for j := 0; j < nRow-1; j++ {

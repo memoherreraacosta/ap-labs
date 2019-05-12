@@ -71,8 +71,9 @@ func (shooter *keyboardShooter) onUpdate() error {
 
 	if keys[sdl.SCANCODE_SPACE] == 1 {
 		if time.Since(shooter.lastShot) >= shooter.cooldown {
-			shooter.shoot(pos.x+25, pos.y-20)
-			shooter.shoot(pos.x-25, pos.y-20)
+			shooter.shoot(pos.x, pos.y-20)
+			//shooter.shoot(pos.x+25, pos.y-20)
+			//shooter.shoot(pos.x-25, pos.y-20)
 
 			shooter.lastShot = time.Now()
 		}

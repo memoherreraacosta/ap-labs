@@ -19,7 +19,7 @@ func newPlayer(renderer *sdl.Renderer) *element {
 		x: screenWidth / 2.0,
 		y: screenHeight - playerSize/2.0}
 
-	sr := newSpriteRenderer(player, renderer, "sprites/player.bmp")
+	sr := newSpriteRenderer(player, renderer, "sprites/Nave.png")
 	player.addComponent(sr)
 
 	mover := newKeyboardMover(player, 5)

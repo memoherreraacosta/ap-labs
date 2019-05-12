@@ -73,7 +73,8 @@ func main() {
 			for j := 0; j < nRow-1; j++ {
 				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
 				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-				elements = append(elements, newBasicEnemy(renderer, x, y))
+				go newBasicEnemy(renderer, x, y)
+
 			}
 		}
 		nCol--
@@ -81,7 +82,8 @@ func main() {
 			j := nRow - 1
 			x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
 			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-			elements = append(elements, newBasicEnemy(renderer, x, y))
+			go newBasicEnemy(renderer, x, y)
+		
 		}
 
 	} else {
@@ -89,7 +91,8 @@ func main() {
 			for j := 0; j < nRow; j++ {
 				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
 				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-				elements = append(elements, newBasicEnemy(renderer, x, y))
+				go newBasicEnemy(renderer, x, y)
+		
 			}
 		}
 	}

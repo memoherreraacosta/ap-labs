@@ -6,7 +6,7 @@ import (
 
 const basicEnemySize = 105
 
-func newBasicEnemy(renderer *sdl.Renderer, x, y float64) *element {
+func newBasicEnemy(renderer *sdl.Renderer, x, y float64){
 	basicEnemy := &element{}
 
 	basicEnemy.position = vector{x: x, y: y}
@@ -26,5 +26,6 @@ func newBasicEnemy(renderer *sdl.Renderer, x, y float64) *element {
 
 	basicEnemy.active = true
 
-	return basicEnemy
+	elements = append(elements,basicEnemy)
+	//return basicEnemy
 }

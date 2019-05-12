@@ -10,9 +10,9 @@ func newBasicEnemy(renderer *sdl.Renderer, x, y float64) *element {
 	basicEnemy := &element{}
 
 	basicEnemy.position = vector{x: x, y: y}
-	basicEnemy.rotation = 180
+	basicEnemy.rotation = 0
 
-	sr := newSpriteRenderer(basicEnemy, renderer, "sprites/basic_enemy.bmp")
+	sr := newSpriteRenderer(basicEnemy, renderer, "sprites/Alien1.1.png")
 	basicEnemy.addComponent(sr)
 
 	vtb := newVulnerableToBullets(basicEnemy)

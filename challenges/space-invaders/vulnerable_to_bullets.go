@@ -23,6 +23,7 @@ func (vtb *vulnerableToBullets) onUpdate() error {
 func (vtb *vulnerableToBullets) onCollision(other *element) error {
 	if other.tag == "bullet" {
 		score += 20
+		totalEnemies--
 		vtb.container.active = false
 	}
 	return nil

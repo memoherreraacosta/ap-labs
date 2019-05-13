@@ -18,6 +18,7 @@ const (
 var(
 	delta float64
 	score int
+	totalEnemies int
 )
 
 type vector struct {
@@ -73,6 +74,8 @@ func main() {
 		numEnemies = 30
 	}
 
+	totalEnemies = numEnemies
+
 	nRow := 4 // Number of row STATIC
 	nCol, res := divmod(numEnemies, nRow)
 
@@ -110,7 +113,8 @@ func main() {
 	
 	initBulletPool(renderer)
 
-	for {
+	for totalEnemies > 0{
+
 		iniST := time.Now()
 
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {

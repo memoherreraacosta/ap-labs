@@ -9,7 +9,7 @@ const (
 	bulletSpeed = 10
 )
 
-func newBullet(renderer *sdl.Renderer) *element {
+func newBullet(renderer *sdl.Renderer,tag string) *element {
 	bullet := &element{}
 
 	sr := newSpriteRenderer(bullet, renderer, "sprites/player_bullet.png")
@@ -24,16 +24,23 @@ func newBullet(renderer *sdl.Renderer) *element {
 	}
 	bullet.collisions = append(bullet.collisions, col)
 
-	bullet.tag = "bullet"
+	bullet.tag = tag
 
 	return bullet
 }
 
 var bulletPool []*element
+var bulletPoolEnemy []*element
 
 func initBulletPool(renderer *sdl.Renderer) {
 	for i := 0; i < 30; i++ {
-		bul := newBullet(renderer)
+		bul := newBullet(renderer,"bullet")
+		bulletPool = append(bulletPool, bul)
+		elements = append(elements, bul)
+	}
+
+	for i := 0; i < 30; i++ {
+		bul := newBullet(renderer,"bullet_enemy")
 		bulletPool = append(bulletPool, bul)
 		elements = append(elements, bul)
 	}
@@ -45,6 +52,14 @@ func bulletFromPool() (*element, bool) {
 			return bul, true
 		}
 	}
+	return nil, false
+}
 
+func bulletFromPoolEnemy() (*element, bool) {
+	for _, bul := range bulletPoolEnemy {
+		if !bul.active {
+			return bul, true
+		}
+	}
 	return nil, false
 }

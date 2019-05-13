@@ -77,7 +77,7 @@ func main() {
 
 	totalEnemies = numEnemies
 
-	nRow := 4 // Number of row STATIC
+	nRow := 3 // Number of row STATIC
 	nCol, res := divmod(totalEnemies, nRow)
 
 	// Case number of enemies modify number of rows and columns

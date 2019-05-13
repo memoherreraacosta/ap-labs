@@ -81,30 +81,19 @@ func main() {
 	nCol, res := divmod(totalEnemies, nRow)
 
 	// Case number of enemies modify number of rows and columns
-	if res != 0 {
-		for i := 0; i < nCol; i++ {
-			for j := 0; j < nRow; j++ {
-				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
-				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-				go newBasicEnemy(renderer, x, y)
-			}
-		}
-		for i := 0; i < res; i++ {
-			j := nRow
+
+	for i := 0; i < nCol; i++ {
+		for j := 0; j < nRow; j++ {
 			x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
 			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
 			go newBasicEnemy(renderer, x, y)
 		}
-	} else {
-
-		for i := 0; i < nCol; i++ {
-			for j := 0; j < nRow; j++ {
-				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
-				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-				go newBasicEnemy(renderer, x, y)
-
-			}
-		}
+	}
+	for i := 0; i < res; i++ {
+		j := nRow
+		x := (float64(i)/float64(res))*screenWidth + (basicEnemySize / 2.0)
+		y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
+		go newBasicEnemy(renderer, x, y)
 	}
 
 	initBulletPool(renderer)

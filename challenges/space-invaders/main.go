@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 	"time"
-
+	"github.com/veandco/go-sdl2/ttf"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -15,7 +15,10 @@ const (
 	framePerSec  = 60
 )
 
-var delta float64
+var(
+	delta float64
+	score int
+)
 
 type vector struct {
 	x float64
@@ -32,6 +35,11 @@ func main() {
 
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		fmt.Println("initializing SDL:", err)
+		return
+	}
+
+	if err := ttf.Init(); err != nil{
+		fmt.Println("initializing ttf:", err)
 		return
 	}
 
@@ -53,11 +61,13 @@ func main() {
 	}
 	defer renderer.Destroy()
 
+	font,_ := ttf.OpenFont("Arial.ttf",18)
+
 	elements = append(elements, newPlayer(renderer))
 
 	// Initialize enemies
 	numEnemies, err := strconv.Atoi(os.Args[1])
-
+	
 	if err != nil {
 		//fmt.Println(err)
 		numEnemies = 30
@@ -96,7 +106,8 @@ func main() {
 			}
 		}
 	}
-
+	
+	
 	initBulletPool(renderer)
 
 	for {
@@ -109,8 +120,14 @@ func main() {
 			}
 		}
 
+		solidSurface, _ := font.RenderUTF8Solid("Score: " + strconv.Itoa(score), sdl.Color{255, 255, 255, 255})
+		solidTexture, _ := renderer.CreateTextureFromSurface(solidSurface)
+		solidSurface.Free()
+
 		renderer.SetDrawColor(0, 0, 0, 0)
 		renderer.Clear()
+
+		renderer.Copy(solidTexture, nil, &sdl.Rect{10, screenHeight-70, 190, 50})
 
 		for _, elem := range elements {
 			if elem.active {

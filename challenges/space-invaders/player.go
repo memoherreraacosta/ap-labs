@@ -8,8 +8,8 @@ import (
 
 const (
 	playerSize = 105
-
 	playerShotCooldown = time.Millisecond * 250
+	scoreSpace = 50
 )
 
 func newPlayer(renderer *sdl.Renderer) *element {
@@ -17,7 +17,7 @@ func newPlayer(renderer *sdl.Renderer) *element {
 
 	player.position = vector{
 		x: screenWidth / 2.0,
-		y: screenHeight - playerSize/2.0}
+		y: screenHeight - playerSize/2.0 - scoreSpace}
 
 	sr := newSpriteRenderer(player, renderer, "sprites/Nave.png")
 	player.addComponent(sr)

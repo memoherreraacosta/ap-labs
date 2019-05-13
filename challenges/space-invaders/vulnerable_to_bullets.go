@@ -1,6 +1,8 @@
 package main
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 type vulnerableToBullets struct {
 	container *element
@@ -20,6 +22,7 @@ func (vtb *vulnerableToBullets) onUpdate() error {
 
 func (vtb *vulnerableToBullets) onCollision(other *element) error {
 	if other.tag == "bullet" {
+		score += 20
 		vtb.container.active = false
 	}
 	return nil

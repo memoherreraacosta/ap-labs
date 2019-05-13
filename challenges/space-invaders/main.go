@@ -5,8 +5,9 @@ import (
 	"os"
 	"strconv"
 	"time"
-	"github.com/veandco/go-sdl2/ttf"
+
 	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 )
 
 const (
@@ -15,9 +16,9 @@ const (
 	framePerSec  = 60
 )
 
-var(
-	delta float64
-	score int
+var (
+	delta        float64
+	score        int
 	totalEnemies int
 )
 
@@ -39,7 +40,7 @@ func main() {
 		return
 	}
 
-	if err := ttf.Init(); err != nil{
+	if err := ttf.Init(); err != nil {
 		fmt.Println("initializing ttf:", err)
 		return
 	}
@@ -62,13 +63,13 @@ func main() {
 	}
 	defer renderer.Destroy()
 
-	font,_ := ttf.OpenFont("Arial.ttf",18)
+	font, _ := ttf.OpenFont("Arial.ttf", 18)
 
 	elements = append(elements, newPlayer(renderer))
 
 	// Initialize enemies
 	numEnemies, err := strconv.Atoi(os.Args[1])
-	
+
 	if err != nil {
 		//fmt.Println(err)
 		numEnemies = 30
@@ -77,43 +78,38 @@ func main() {
 	totalEnemies = numEnemies
 
 	nRow := 4 // Number of row STATIC
-	nCol, res := divmod(numEnemies, nRow)
+	nCol, res := divmod(totalEnemies, nRow)
 
 	// Case number of enemies modify number of rows and columns
 	if res != 0 {
-		nCol++
-		for i := 0; i < nCol; i++ {
-			for j := 0; j < nRow-1; j++ {
-				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
-				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-				go newBasicEnemy(renderer, x, y)
-
-			}
-		}
-		nCol--
-		for i := 0; i < res; i++ {
-			j := nRow - 1
-			x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
-			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-			go newBasicEnemy(renderer, x, y)
-		
-		}
-
-	} else {
 		for i := 0; i < nCol; i++ {
 			for j := 0; j < nRow; j++ {
 				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
 				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
 				go newBasicEnemy(renderer, x, y)
-		
+			}
+		}
+		for i := 0; i < res; i++ {
+			j := nRow
+			x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
+			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
+			go newBasicEnemy(renderer, x, y)
+		}
+	} else {
+
+		for i := 0; i < nCol; i++ {
+			for j := 0; j < nRow; j++ {
+				x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
+				y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
+				go newBasicEnemy(renderer, x, y)
+
 			}
 		}
 	}
-	
-	
+
 	initBulletPool(renderer)
 
-	for totalEnemies > 0{
+	for totalEnemies > 0 {
 
 		iniST := time.Now()
 
@@ -124,14 +120,14 @@ func main() {
 			}
 		}
 
-		solidSurface, _ := font.RenderUTF8Solid("Score: " + strconv.Itoa(score), sdl.Color{255, 255, 255, 255})
+		solidSurface, _ := font.RenderUTF8Solid("Score: "+strconv.Itoa(score), sdl.Color{255, 255, 255, 255})
 		solidTexture, _ := renderer.CreateTextureFromSurface(solidSurface)
 		solidSurface.Free()
 
 		renderer.SetDrawColor(0, 0, 0, 0)
 		renderer.Clear()
 
-		renderer.Copy(solidTexture, nil, &sdl.Rect{10, screenHeight-70, 190, 50})
+		renderer.Copy(solidTexture, nil, &sdl.Rect{10, screenHeight - 70, 190, 50})
 
 		for _, elem := range elements {
 			if elem.active {

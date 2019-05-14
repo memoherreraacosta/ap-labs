@@ -75,7 +75,7 @@ Space Invaders has a component based architecture. It consists of ten .go files 
 - Run on a bash terminal.
 
 ### Space Invadors game rules:
-- The player should choose a minimum of 16 enemies to play against.
+- The player should choose a maximum of 300 enemies to play against.
 - The player can move from left to right using the keyboard left and right arrows.
 - The player can shoot the enemies using the space keyboard.
 - The player will loose if it gets shoot 10 times.

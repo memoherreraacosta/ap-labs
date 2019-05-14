@@ -1,61 +1,63 @@
-# Advanced Programming 
-## Space Invadors Project Arquitecture
+# Space Invaders Architecture Overview
+## Advanced Programming 
+
 ### Programming language: Golang
-#### -Team Members:
-###### Victor Najar
-###### Katya Chumakova
-###### Guillermo Herrera
-###### Floreth Gonzalez
+#### Team Members :
+* Víctor Najar
+* Ekaterina Chumakova
+* Guillermo Herrera
+* Floreth Gonzalez
 
-
-
+************************
 
 Space Invaders has a component based architecture. It consists of ten .go files that will be described bellow.
 
-**player_control.go**
-Set player layout limits
-Set bullet trajectory and activation according to players position
+[player_control.go](player_control.go)
+- Set player layout limits
+- Set bullet trajectory and activation according to players position
 
-**player.go**
-Create new player
-Render sprite of player
+[player.go](player.go)
+- Create new player
+- Render sprite of player
 
-**sprite_renderer.go**
+[sprite_renderer.go](sprite_renderer.go)
 Uses sdl Go library to render players and enemies
 
-**vulnerable_to_bullets.go**
-Collision checker
+[vulnerable_to_bullets.go](vulnerable_to_bullets.go)
+- Collision checker
 
-**element.go**
-Array of elements that can be {bullets, enemies, players}
-Array of components that are actions {shoot, move}
+[element.go](element.go)
+- Array of elements that can be {bullets, enemies, players}
+- Array of components that are actions {shoot, move}
 
-**collisions.go**
-Collision logic of bullet and enemy 
+[collisions.go](collisions.go)
+- Collision logic of bullet and enemy 
 
-**bullet.go**
-Initialize pool of bullets
+[bullet.go](bullet.go)
+- Initialize pool of bullets
 
-**bullet_mover.go**
-Calculates position of bullet 
-Collision of bullet
+[bullet_mover.go](bullet_mover.go)
+- Calculates position of bullet 
+- Collision of bullet
 
-**basic_enemy.go**
-Create a new enemy
+[basic_enemy.go](basic_enemy.go)
+- Create a new enemy
 
-**main.go**
-Player score
-Enemies behaviours are implemented on separate threads 
+[main.go](main.go)
+- Player score
+- Enemies behaviours are implemented on separate threads 
+
+
 
 ### Libraries
 <em>**go-sdl2-sdl**</em>
-It enables interoperability between Go and the SDL2 library which is written in C. SDL2 is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.
+- Enables interoperability between Go and the SDL2 library which is written in C. SDL2 is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.
 
 <em>**go-sdl2-img**</em>
-Enables the use of png images as sprites.
+- Enables the use of png images as sprites.
 
 <em>**go-sdl2-ttf**</em>
-Package ttf is a TrueType font rendering library that is used with the SDL library, and almost as portable. It depends on freetype2 to handle the TrueType font data. It allows a programmer to use multiple TrueType fonts without having to code a font rendering routine themselves.
+- Package ttf is a TrueType font rendering library that is used with the SDL library, and almost as portable. It depends on freetype2 to handle the TrueType font data. It allows a programmer to use multiple TrueType fonts without having to code a font rendering routine themselves.
 
 ### Space Invadors prerequisites:
 - Have Golang installed.
@@ -69,6 +71,6 @@ Package ttf is a TrueType font rendering library that is used with the SDL libra
 - The player wins the game if it destroys all of the space invadors.
 
 ### To Compile Space Invaders:
-```go
-make
+```
+    $ make
 ```

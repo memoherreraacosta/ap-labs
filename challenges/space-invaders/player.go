@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	playerSize = 105
-	playerShotCooldown = time.Millisecond * 250
+	playerSize = 70
+	playerShotCooldown = time.Millisecond * 500
 	scoreSpace = 50
 )
 
@@ -24,6 +24,15 @@ func newPlayer(renderer *sdl.Renderer) *element {
 
 	mover := newKeyboardMover(player, 5)
 	player.addComponent(mover)
+
+
+	coli := circle{
+		center: player.position,
+		radius: 30,
+	}
+
+	player.collisions = append(player.collisions, coli)
+	player.tag = "player"
 
 	shooter := newKeyboardShooter(player, playerShotCooldown)
 	player.addComponent(shooter)

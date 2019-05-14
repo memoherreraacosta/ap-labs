@@ -4,7 +4,7 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func newBulletEnemy(renderer *sdl.Renderer,tag string) *element {
+func newBulletEnemy(renderer *sdl.Renderer, tag string) *element {
 	bullet := &element{}
 
 	sr := newSpriteRenderer(bullet, renderer, "sprites/"+tag+".png")
@@ -26,7 +26,7 @@ var bulletPoolEnemy []*element
 
 func initBulletPoolEnemy(renderer *sdl.Renderer) {
 	for i := 0; i < 50; i++ {
-		bul := newBulletEnemy(renderer,"bullet_enemy")
+		bul := newBulletEnemy(renderer, "bullet_enemy")
 		bulletPoolEnemy = append(bulletPoolEnemy, bul)
 		elements = append(elements, bul)
 	}

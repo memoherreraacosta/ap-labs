@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	playerSize = 70
+	playerSize         = 70
 	playerShotCooldown = time.Millisecond * 500
-	scoreSpace = 50
+	scoreSpace         = 50
 )
 
 func newPlayer(renderer *sdl.Renderer) *element {
@@ -24,7 +24,6 @@ func newPlayer(renderer *sdl.Renderer) *element {
 
 	mover := newKeyboardMover(player, 5)
 	player.addComponent(mover)
-
 
 	coli := circle{
 		center: player.position,

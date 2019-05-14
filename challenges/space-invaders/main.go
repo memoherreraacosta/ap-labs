@@ -20,7 +20,8 @@ var (
 	delta        float64
 	score        int
 	totalEnemies int
-	lives 			int
+	lives        = 10
+	eK           = 0 // Enemies Killed
 )
 
 type vector struct {
@@ -34,12 +35,7 @@ func divmod(numerator, denominator int) (quotient, remainder int) {
 	return
 }
 
-
-
 func main() {
-	lives = 10;
-
-
 
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		fmt.Println("initializing SDL:", err)
@@ -73,26 +69,15 @@ func main() {
 	elements = append(elements, newPlayer(renderer))
 
 	// Initialize enemies
-	numEnemies, err := strconv.Atoi(os.Args[1])
+	totalEnemies, err := strconv.Atoi(os.Args[1])
 
 	if err != nil {
 		fmt.Println(err)
 	}
-	totalEnemies = numEnemies
 
-	var nRow int
-	// Fix number of rows and enemies to have
-
-	if (totalEnemies <= 10){
-		nRow = 2
-	} else if (totalEnemies <= 20){
-		nRow = 2
-	} else if (totalEnemies <= 30){
-		nRow = 3
-	} else if (totalEnemies <= 40){
-		nRow = 4
-	} else {
-		nRow = 10
+	nRow, resi := divmod(totalEnemies, 12)
+	if resi != 0 {
+		nRow++
 	}
 
 	// Number of row STATIC
@@ -104,9 +89,9 @@ func main() {
 		for j := 0; j < nRow; j++ {
 			x := (float64(i)/float64(nCol))*screenWidth + (basicEnemySize / 2.0)
 			y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-			if (j % 3 == 0) {
+			if j%3 == 0 {
 				go newBasicEnemy(renderer, x, y, 1)
-			} else if ( j % 2 == 0){
+			} else if j%2 == 0 {
 				go newBasicEnemy(renderer, x, y, 2)
 			} else {
 				go newBasicEnemy(renderer, x, y, 3)
@@ -117,9 +102,9 @@ func main() {
 		j := nRow
 		x := (float64(i)/float64(res))*screenWidth + (basicEnemySize / 2.0)
 		y := float64(j)*basicEnemySize + (basicEnemySize / 2.0)
-		if (j == 1){
+		if j == 1 {
 			go newBasicEnemy(renderer, x, y, 1)
-		} else if ( j == 2){
+		} else if j == 2 {
 			go newBasicEnemy(renderer, x, y, 2)
 		} else {
 			go newBasicEnemy(renderer, x, y, 3)
@@ -153,14 +138,12 @@ func main() {
 		renderer.Copy(solidTexture, nil, &sdl.Rect{10, screenHeight - 70, 190, 50})
 		renderer.Copy(solidTexture2, nil, &sdl.Rect{400, screenHeight - 70, 190, 50})
 
-
-		if (lives == 0){
+		// Case you lose
+		if lives <= 0 {
 			for _, elem := range elements {
-				elem.active	= false
+				elem.active = false
 			}
-
-			//renderer.Clear()
-
+			renderer.Clear()
 			solidSurface3, _ := font.RenderUTF8Solid("GAME OVER", sdl.Color{255, 255, 255, 255})
 			solidTexture3, _ := renderer.CreateTextureFromSurface(solidSurface3)
 			solidSurface3.Free()
@@ -169,6 +152,21 @@ func main() {
 
 			renderer.Copy(solidTexture3, nil, &sdl.Rect{150, screenHeight - 500, 300, 100})
 			//renderer.Copy(solidTexture, nil, &sdl.Rect{10, screenHeight - 70, 190, 50})
+		}
+
+		// Case you win
+		if (score / 20) == totalEnemies {
+			for _, elem := range elements {
+				elem.active = false
+			}
+			renderer.Clear()
+			solidSurface3, _ := font.RenderUTF8Solid("YOU WIN", sdl.Color{255, 255, 255, 255})
+			solidTexture3, _ := renderer.CreateTextureFromSurface(solidSurface3)
+			solidSurface3.Free()
+
+			renderer.SetDrawColor(1, 0, 0, 0)
+
+			renderer.Copy(solidTexture3, nil, &sdl.Rect{150, screenHeight - 500, 300, 100})
 		}
 
 		for _, elem := range elements {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"math"
-	"fmt"
+
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -34,13 +34,10 @@ func (mover *bulletMoverEnemy) onUpdate() error {
 
 	return nil
 
-
 }
 
 func (mover *bulletMoverEnemy) onCollision(other *element) error {
 	mover.container.active = false
-	lives -=1;
-
-	fmt.Println(lives)
+	lives -= 1
 	return nil
 }

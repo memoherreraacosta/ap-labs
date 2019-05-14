@@ -29,3 +29,7 @@ To run the game just use the `space-invaders` file and add the number of enemies
 ```
 ./space-invaders [ #OfEnemies ]
 ```
+
+References
+-----------
+This implementation was based on the tutorial [Gaming in Go](https://www.youtube.com/playlist?list=PLOXvU5Ov-cqpjd1_OnczdizY0I64OfH-T) by Velovix, from there we took some of the structure and improved the code.

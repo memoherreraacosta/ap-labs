@@ -64,20 +64,43 @@ func main() {
 	defer renderer.Destroy()
 
 	font, _ := ttf.OpenFont("Arial.ttf", 18)
-
 	elements = append(elements, newPlayer(renderer))
 
 	// Initialize enemies
 	numEnemies, err := strconv.Atoi(os.Args[1])
 
 	if err != nil {
-		//fmt.Println(err)
-		numEnemies = 30
+		fmt.Println(err)
 	}
-
 	totalEnemies = numEnemies
 
-	nRow := 3 // Number of row STATIC
+	var nRow int
+	// Fix number of rows and enemies to have
+	// A better
+	switch {
+	case (32 < totalEnemies):
+		numEnemies = 16
+		nRow = 2
+		break
+	case (24 < totalEnemies):
+		nRow = 4
+		break
+	case (16 < totalEnemies):
+		nRow = 3
+		break
+	case (8 < totalEnemies):
+		nRow = 2
+		break
+	case (1 <= totalEnemies):
+		nRow = 1
+		break
+	default:
+		numEnemies = 16
+		nRow = 2
+		break
+	}
+
+	// Number of row STATIC
 	nCol, res := divmod(totalEnemies, nRow)
 
 	// Case number of enemies modify number of rows and columns

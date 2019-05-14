@@ -6,46 +6,57 @@
 * Víctor Najar
 * Ekaterina Chumakova
 * Guillermo Herrera
-* Floreth Gonzalez
+* Floreth González
 
 ************************
 
 Space Invaders has a component based architecture. It consists of ten .go files that will be described bellow.
 
-[player_control.go](player_control.go)
-- Set player layout limits
-- Set bullet trajectory and activation according to players position
+[basic_enemy.go](basic_enemy.go)
+- Create a new enemy
 
-[player.go](player.go)
-- Create new player
-- Render sprite of player
+[basic_enemy_mover.go](basic_enemy_mover.go)
+- Manage movement of enemies
 
-[sprite_renderer.go](sprite_renderer.go)
-Uses sdl Go library to render players and enemies
+[bullet.go](bullet.go)
+- Initialize pool of player´s bullets
 
-[vulnerable_to_bullets.go](vulnerable_to_bullets.go)
-- Collision checker
+[bullet_enemy.go](bullet_enemy.go)
+- Initialize pool of enemie´s bullets
+
+[bullet_mover.go](bullet_mover.go)
+- Calculates position of the player´s bullet 
+- Collision of bullet to the enemies
+
+[bullet_mover_enemy.go](bullet_mover_enemy.go)
+- Calculates position of the enemie´s bullet 
+- Collision of bullet to the player
+
+[collisions.go](collisions.go)
+- Collision logic of bullet and enemy 
 
 [element.go](element.go)
 - Array of elements that can be {bullets, enemies, players}
 - Array of components that are actions {shoot, move}
 
-[collisions.go](collisions.go)
-- Collision logic of bullet and enemy 
-
-[bullet.go](bullet.go)
-- Initialize pool of bullets
-
-[bullet_mover.go](bullet_mover.go)
-- Calculates position of bullet 
-- Collision of bullet
-
-[basic_enemy.go](basic_enemy.go)
-- Create a new enemy
-
 [main.go](main.go)
 - Player score
 - Enemies behaviours are implemented on separate threads 
+
+[player.go](player.go)
+- Create new player
+- Render sprite of player
+
+[player_control.go](player_control.go)
+- Set player layout limits
+- Set bullet trajectory and activation according to players position
+
+[sprite_renderer.go](sprite_renderer.go)
+- Uses sdl Go library to render players and enemies
+
+[vulnerable_to_bullets.go](vulnerable_to_bullets.go)
+- Collision checker
+
 
 **************************
 

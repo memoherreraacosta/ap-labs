@@ -3,4 +3,4 @@ all:
 	clear
 	go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}
 	go build
-	echo RUN THE BINARY FILE TO PLAY (./space-invaders [num of enemies])
+	echo RUN THE BINARY FILE TO PLAY

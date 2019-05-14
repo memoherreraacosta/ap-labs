@@ -38,6 +38,8 @@ func (mover *bulletMoverEnemy) onUpdate() error {
 
 func (mover *bulletMoverEnemy) onCollision(other *element) error {
 	mover.container.active = false
-	lives -= 1
+	if other.tag == "player"{
+		lives -= 1
+	}
 	return nil
 }

@@ -47,7 +47,7 @@ Uses sdl Go library to render players and enemies
 - Player score
 - Enemies behaviours are implemented on separate threads 
 
-
+**************************
 
 ### Libraries
 <em>**go-sdl2-sdl**</em>

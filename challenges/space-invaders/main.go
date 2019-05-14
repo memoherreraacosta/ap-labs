@@ -146,12 +146,15 @@ func main() {
 			renderer.Clear()
 			solidSurface3, _ := font.RenderUTF8Solid("GAME OVER", sdl.Color{255, 255, 255, 255})
 			solidTexture3, _ := renderer.CreateTextureFromSurface(solidSurface3)
+			solidSurface, _ := font.RenderUTF8Solid("Score: "+strconv.Itoa(score), sdl.Color{255, 255, 255, 255})
+			solidTexture, _ := renderer.CreateTextureFromSurface(solidSurface)
 			solidSurface3.Free()
+			solidSurface.Free()
 
 			renderer.SetDrawColor(1, 0, 0, 0)
 
 			renderer.Copy(solidTexture3, nil, &sdl.Rect{150, screenHeight - 500, 300, 100})
-			//renderer.Copy(solidTexture, nil, &sdl.Rect{10, screenHeight - 70, 190, 50})
+			renderer.Copy(solidTexture, nil, &sdl.Rect{190, screenHeight - 350, 190, 50})
 		}
 
 		// Case you win
@@ -162,11 +165,15 @@ func main() {
 			renderer.Clear()
 			solidSurface3, _ := font.RenderUTF8Solid("YOU WIN", sdl.Color{255, 255, 255, 255})
 			solidTexture3, _ := renderer.CreateTextureFromSurface(solidSurface3)
+			solidSurface, _ := font.RenderUTF8Solid("Score: "+strconv.Itoa(score), sdl.Color{255, 255, 255, 255})
+			solidTexture, _ := renderer.CreateTextureFromSurface(solidSurface)
+			solidSurface.Free()
 			solidSurface3.Free()
 
 			renderer.SetDrawColor(1, 0, 0, 0)
 
 			renderer.Copy(solidTexture3, nil, &sdl.Rect{150, screenHeight - 500, 300, 100})
+			renderer.Copy(solidTexture, nil, &sdl.Rect{190, screenHeight - 350, 190, 50})
 		}
 
 		for _, elem := range elements {

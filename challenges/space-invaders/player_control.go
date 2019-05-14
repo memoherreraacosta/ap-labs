@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"time"
+	"fmt"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -40,7 +41,7 @@ func (mover *keyboardMover) onUpdate() error {
 			mover.container.position.x += mover.speed * delta
 		}
 	}
-
+	mover.container.collisions[0].center = mover.container.position
 	return nil
 }
 
@@ -71,6 +72,7 @@ func (shooter *keyboardShooter) onUpdate() error {
 
 	if keys[sdl.SCANCODE_SPACE] == 1 {
 		if time.Since(shooter.lastShot) >= shooter.cooldown {
+			fmt.Println("shoot")
 			shooter.shoot(pos.x, pos.y-20)
 			//shooter.shoot(pos.x+25, pos.y-20)
 			//shooter.shoot(pos.x-25, pos.y-20)
